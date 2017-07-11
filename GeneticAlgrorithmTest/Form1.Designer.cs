@@ -43,6 +43,8 @@
             this.GenerationLabel = new System.Windows.Forms.Label();
             this.FitnessLabel = new System.Windows.Forms.Label();
             this.TimeLabel = new System.Windows.Forms.Label();
+            this.ElitePctTextBox = new System.Windows.Forms.TextBox();
+            this.ElitePctLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TitleLabel
@@ -78,14 +80,14 @@
             // 
             this.Value2.Location = new System.Drawing.Point(40, 125);
             this.Value2.Name = "Value2";
-            this.Value2.Size = new System.Drawing.Size(100, 20);
+            this.Value2.Size = new System.Drawing.Size(80, 20);
             this.Value2.TabIndex = 1;
             // 
             // Value3
             // 
-            this.Value3.Location = new System.Drawing.Point(181, 125);
+            this.Value3.Location = new System.Drawing.Point(131, 125);
             this.Value3.Name = "Value3";
-            this.Value3.Size = new System.Drawing.Size(100, 20);
+            this.Value3.Size = new System.Drawing.Size(80, 20);
             this.Value3.TabIndex = 2;
             // 
             // Label1
@@ -100,7 +102,7 @@
             // Population
             // 
             this.Population.AutoSize = true;
-            this.Population.Location = new System.Drawing.Point(58, 109);
+            this.Population.Location = new System.Drawing.Point(50, 109);
             this.Population.Name = "Population";
             this.Population.Size = new System.Drawing.Size(57, 13);
             this.Population.TabIndex = 3;
@@ -109,7 +111,7 @@
             // Label3
             // 
             this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(195, 109);
+            this.Label3.Location = new System.Drawing.Point(136, 109);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(69, 13);
             this.Label3.TabIndex = 3;
@@ -180,6 +182,22 @@
             this.TimeLabel.TabIndex = 8;
             this.TimeLabel.Text = "Time: 0";
             // 
+            // ElitePctTextBox
+            // 
+            this.ElitePctTextBox.Location = new System.Drawing.Point(222, 125);
+            this.ElitePctTextBox.Name = "ElitePctTextBox";
+            this.ElitePctTextBox.Size = new System.Drawing.Size(80, 20);
+            this.ElitePctTextBox.TabIndex = 2;
+            // 
+            // ElitePctLabel
+            // 
+            this.ElitePctLabel.AutoSize = true;
+            this.ElitePctLabel.Location = new System.Drawing.Point(220, 109);
+            this.ElitePctLabel.Name = "ElitePctLabel";
+            this.ElitePctLabel.Size = new System.Drawing.Size(84, 13);
+            this.ElitePctLabel.TabIndex = 3;
+            this.ElitePctLabel.Text = "Elite percentage";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -191,10 +209,12 @@
             this.Controls.Add(this.StopBtn);
             this.Controls.Add(this.BestGuessTextBox);
             this.Controls.Add(this.DetailTextBox);
+            this.Controls.Add(this.ElitePctLabel);
             this.Controls.Add(this.Label3);
             this.Controls.Add(this.Population);
             this.Controls.Add(this.CurrentGuessLabel);
             this.Controls.Add(this.Label1);
+            this.Controls.Add(this.ElitePctTextBox);
             this.Controls.Add(this.Value3);
             this.Controls.Add(this.Value2);
             this.Controls.Add(this.PhraseToGuessTextBox);
@@ -224,6 +244,8 @@
         private System.Windows.Forms.Label GenerationLabel;
         private System.Windows.Forms.Label FitnessLabel;
         private System.Windows.Forms.Label TimeLabel;
+        private System.Windows.Forms.TextBox ElitePctTextBox;
+        private System.Windows.Forms.Label ElitePctLabel;
     }
 }
 

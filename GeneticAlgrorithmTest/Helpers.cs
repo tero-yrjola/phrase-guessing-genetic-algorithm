@@ -16,28 +16,28 @@ namespace GeneticAlgorithmTest
             try
             {
                 return string.IsNullOrWhiteSpace(valueString) ? DefaultPopulation :
-                    Convert.ToInt32(valueString) <= 0 || Convert.ToInt32(valueString) >= 100
+                    Convert.ToInt32(valueString) <= 0 || Convert.ToInt32(valueString) >= 1000000
                         ? DefaultPopulation : valueString;
             }
             catch (FormatException ex)
             {
-                throw new InputFieldValueException("Population has to be an integer between 0 and 100.");
+                throw new InputFieldValueException("Population has to be an integer between 0 and 1,000,000.");
             }
         }
 
-        public static string ReturnValidMutationRate(string valueString)
+        public static string ReturnValidPercentage(string valueString)
         {
             valueString = valueString.Replace('.', ',');
 
             try
             {
-                return string.IsNullOrWhiteSpace(valueString) ? DefaultMutationRate :
-                    Convert.ToDecimal(valueString) <= 0 || Convert.ToDecimal(valueString) >= 100
-                        ? DefaultMutationRate : valueString;
+                return string.IsNullOrWhiteSpace(valueString) ? DefaultPercentage :
+                    Convert.ToDecimal(valueString) <= 0 || Convert.ToDecimal(valueString) >= 1
+                        ? DefaultPercentage : valueString;
             }
             catch (FormatException ex)
             {
-                throw new InputFieldValueException("Mutation rate has to be a decimal between 0 and 100.");
+                throw new InputFieldValueException("Mutation rate / elite percentage has to be a decimal between 0 and 1.");
             }
         }
 

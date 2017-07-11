@@ -13,8 +13,6 @@ namespace GeneticAlgorithmTest
         private readonly int population;
 
         private Chromosome bestGuess;
-
-        public decimal ElitePercentage = 0.2m;
         public DNA(int length, int pop)
         {
             chromosomeLength = length;
@@ -51,9 +49,9 @@ namespace GeneticAlgorithmTest
             return chromosome;
         }
 
-        public void SelectionAndCrossOver()
+        public void SelectionAndCrossOver(decimal elitePct)
         {
-            var numberOfElites = (int) (population * ElitePercentage + 0.5m);
+            var numberOfElites = (int) (population * elitePct + 0.5m);
             var elites = chromosomes.OrderByDescending(c => c.GetFitness()).Take(numberOfElites).ToArray();
 
             bestGuess = elites[0];

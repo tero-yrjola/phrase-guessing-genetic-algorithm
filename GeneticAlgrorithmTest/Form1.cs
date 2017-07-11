@@ -31,12 +31,18 @@ namespace GeneticAlgorithmTest
 
         private string mutationRate
         {
-            set { Value3.Text = Helpers.ReturnValidMutationRate(value); }
+            set { Value3.Text = Helpers.ReturnValidPercentage(value); }
             get { return Value3.Text; }
         }
 
-        public const string DefaultPopulation = "50";
-        public const string DefaultMutationRate = "0,01";
+        private string elitePct
+        {
+            set { ElitePctTextBox.Text = Helpers.ReturnValidPercentage(value); }
+            get { return ElitePctTextBox.Text; }
+        }
+
+        public const string DefaultPopulation = "1000";
+        public const string DefaultPercentage = "0,1";
 
         public Form1()
         {
@@ -83,17 +89,18 @@ namespace GeneticAlgorithmTest
                 phraseToGuess = Helpers.CheckPhraseLegitimacy(PhraseToGuessTextBox.Text);
                 population = Value2.Text;
                 mutationRate = Value3.Text;
+                elitePct = ElitePctTextBox.Text;
             }
             catch (InputFieldValueException ex)
             {
                 Output(ex.Message);
             }
 
-            Output($"Starting with values {population} and {mutationRate}");
+            Output($"Starting with values {population}, {mutationRate} and {elitePct}.");
 
             SetUpLabels();
 
-            GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, this);
+            GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, elitePct, this);
 
             GeneticAlgorithm.cancellationToken = false;
             SwapBetweenStartAndStop();
