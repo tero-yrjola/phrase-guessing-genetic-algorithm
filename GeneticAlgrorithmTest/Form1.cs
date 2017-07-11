@@ -4,34 +4,72 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GeneticAlgorithmTest;
 
-namespace GeneticAlgrorithmTest
+namespace GeneticAlgorithmTest
 {
     public partial class Form1 : Form
     {
         private string phraseToGuess;
+        private int currentGen;
+        private Chromosome bestGuess;
 
-        private string value2
+        private Timer timer;
+        private int time;
+
+        private string population
         {
-            set { Value2.Text = Helpers.ReturnValidField2Value(value); }
+            set { Value2.Text = Helpers.ReturnValidPopulation(value); }
             get { return Value2.Text; }
         }
 
-        private string value3
+        private string mutationRate
         {
-            set { Value3.Text = Helpers.ReturnValidField3Value(value); }
+            set { Value3.Text = Helpers.ReturnValidMutationRate(value); }
             get { return Value3.Text; }
         }
 
-        public const string DefaultValue2 = "10";
-        public const string DefaultValue3 = "10";
+        public const string DefaultPopulation = "50";
+        public const string DefaultMutationRate = "0,01";
 
         public Form1()
         {
             InitializeComponent();
+
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += timer_Tick;
+            timer.Enabled = false;
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            time++;
+            DrawTimer();
+        }
+
+        private void DrawTimer()
+        {
+            TimeLabel.Text = $"Time: {time}";
+        }
+
+        private void DrawFitness()
+        {
+            FitnessLabel.Text = $"Fitness: {bestGuess?.GetFitness() ?? 0} / {phraseToGuess.Length}";
+        }
+
+        private void DrawGeneration()
+        {
+            GenerationLabel.Text = $"Generation: {currentGen}";
+        }
+
+        private void DrawBestGuess()
+        {
+            BestGuessTextBox.Text = bestGuess.GetGenes();
         }
 
         private void PhraseToGuessTextBox_TextChanged(object sender, EventArgs e)
@@ -41,33 +79,70 @@ namespace GeneticAlgrorithmTest
 
         private void StartBtn_Click(object sender, EventArgs e)
         {
+            ResetTimer();
             try
             {
                 phraseToGuess = Helpers.CheckPhraseLegitimacy(PhraseToGuessTextBox.Text);
-                value2 = Value2.Text;
-                value3 = Value3.Text;
+                population = Value2.Text;
+                mutationRate = Value3.Text;
 
-                Output($"Starting with values {value2} and {value3}");
+                Output($"Starting with values {population} and {mutationRate}");
 
                 SwapBetweenStartAndStop();
 
-                GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, value2, value3);
+                SetUpLabels();
+
+                GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, this);
+
+                algorithm.Run();
             }
-            catch (Exception)
+            catch (InputFieldValueException ex)
             {
-                Output("Check your values fool!");
+                Output(ex.Message);
             }
         }
 
-        private void Output(string s)
+        private void SetUpLabels()
         {
-            DetailTextBox.Text += s + "\n";
+                timer.Enabled = true;
+                DrawFitness();
+                DrawGeneration();
         }
 
         private void StopBtn_Click(object sender, EventArgs e)
         {
+            timer.Enabled = false;
+            currentGen = 0;
+            bestGuess = null;
+            
             SwapBetweenStartAndStop();
             Output("Stopped!");
+        }
+
+        private void ResetTimer()
+        {
+            time = 0;
+            DrawTimer();
+        }
+
+        public void UpdateFormValues(Chromosome bestChromosome)
+        {
+            bestGuess = bestChromosome;
+            currentGen++;
+
+            var form = Form.ActiveForm as Form1;
+            if (form != null)
+            {
+                DrawBestGuess();
+                DrawFitness();
+                DrawGeneration();
+            }
+        }
+
+        private static void Output(string s)
+        {
+            var form = Form.ActiveForm as Form1;
+            if (form != null) form.DetailTextBox.Text += s + "\n";
         }
 
         private void SwapBetweenStartAndStop()

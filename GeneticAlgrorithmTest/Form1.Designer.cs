@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgrorithmTest
+﻿namespace GeneticAlgorithmTest
 {
     partial class Form1
     {
@@ -40,6 +40,9 @@
             this.BestGuessTextBox = new System.Windows.Forms.TextBox();
             this.CurrentGuessLabel = new System.Windows.Forms.Label();
             this.StopBtn = new System.Windows.Forms.Button();
+            this.GenerationLabel = new System.Windows.Forms.Label();
+            this.FitnessLabel = new System.Windows.Forms.Label();
+            this.TimeLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TitleLabel
@@ -150,11 +153,41 @@
             this.StopBtn.Visible = false;
             this.StopBtn.Click += new System.EventHandler(this.StopBtn_Click);
             // 
+            // GenerationLabel
+            // 
+            this.GenerationLabel.AutoSize = true;
+            this.GenerationLabel.Location = new System.Drawing.Point(37, 231);
+            this.GenerationLabel.Name = "GenerationLabel";
+            this.GenerationLabel.Size = new System.Drawing.Size(65, 13);
+            this.GenerationLabel.TabIndex = 6;
+            this.GenerationLabel.Text = "Generation: ";
+            // 
+            // FitnessLabel
+            // 
+            this.FitnessLabel.AutoSize = true;
+            this.FitnessLabel.Location = new System.Drawing.Point(178, 231);
+            this.FitnessLabel.Name = "FitnessLabel";
+            this.FitnessLabel.Size = new System.Drawing.Size(69, 13);
+            this.FitnessLabel.TabIndex = 7;
+            this.FitnessLabel.Text = "Fitness: 0 / 0";
+            // 
+            // TimeLabel
+            // 
+            this.TimeLabel.AutoSize = true;
+            this.TimeLabel.Location = new System.Drawing.Point(349, 231);
+            this.TimeLabel.Name = "TimeLabel";
+            this.TimeLabel.Size = new System.Drawing.Size(42, 13);
+            this.TimeLabel.TabIndex = 8;
+            this.TimeLabel.Text = "Time: 0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(455, 419);
+            this.Controls.Add(this.TimeLabel);
+            this.Controls.Add(this.FitnessLabel);
+            this.Controls.Add(this.GenerationLabel);
             this.Controls.Add(this.StopBtn);
             this.Controls.Add(this.BestGuessTextBox);
             this.Controls.Add(this.DetailTextBox);
@@ -184,10 +217,13 @@
         private System.Windows.Forms.Label Label1;
         private System.Windows.Forms.Label Label2;
         private System.Windows.Forms.Label Label3;
+        private System.Windows.Forms.Label CurrentGuessLabel;
         private System.Windows.Forms.RichTextBox DetailTextBox;
         private System.Windows.Forms.TextBox BestGuessTextBox;
-        private System.Windows.Forms.Label CurrentGuessLabel;
-        public System.Windows.Forms.Button StopBtn;
+        private System.Windows.Forms.Button StopBtn;
+        private System.Windows.Forms.Label GenerationLabel;
+        private System.Windows.Forms.Label FitnessLabel;
+        private System.Windows.Forms.Label TimeLabel;
     }
 }
 

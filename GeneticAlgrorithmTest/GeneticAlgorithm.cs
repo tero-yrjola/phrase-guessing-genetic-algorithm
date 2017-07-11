@@ -1,20 +1,44 @@
 ﻿using System;
+using System.Threading.Tasks;
+using GeneticAlgorithmTest;
 
-namespace GeneticAlgrorithmTest
+namespace GeneticAlgorithmTest
 {
     public class GeneticAlgorithm
     {
         private string phraseToGuess;
-        private int value2;
-        private decimal value3;
+        private int population;
+        private decimal mutationRate;
+        private int chromosomeLength;
+        private DNA dna;
 
-        public GeneticAlgorithm(string phraseToGuess, string value2, string value3)
+        private Form1 form;
+
+        public GeneticAlgorithm(string phraseToGuess, string pop, string mutRate, Form1 form)
         {
             this.phraseToGuess = phraseToGuess;
-            this.value2 = Convert.ToInt32(value2);
-            this.value3 = Convert.ToDecimal(value3);
+            this.chromosomeLength = phraseToGuess.Length;
+            this.population = Convert.ToInt32(pop);
+            this.mutationRate = Convert.ToDecimal(mutRate);
+            this.form = form;
+        }
 
-            //TODO the algorithm itself lol
+        public async void Run()
+        {
+            dna = new DNA(chromosomeLength, population);
+
+            for (int i = 0; i < 20; i++)
+            {
+                dna.SelectionAndCrossOver();
+
+                dna.CalculateFitnessesFor(phraseToGuess);
+
+                form.UpdateFormValues(dna.GetBestGuess());
+
+                dna.Mutation(mutationRate);
+
+                await Task.Delay(50);
+            }
         }
     }
 }
