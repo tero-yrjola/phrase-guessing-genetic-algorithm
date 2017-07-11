@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B83AF3F4-FABC-42C8-895B-47F6E7569628}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GeneticAlgrorithmTest</RootNamespace>
-    <AssemblyName>GeneticAlgrorithmTest</AssemblyName>
+    <RootNamespace>GeneticAlgorithmTest</RootNamespace>
+    <AssemblyName>GeneticAlgorithmTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -65,6 +65,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
