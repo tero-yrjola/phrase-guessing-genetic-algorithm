@@ -6,9 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GeneticAlgorithmTest;
+using Timer = System.Windows.Forms.Timer;
 
 namespace GeneticAlgorithmTest
 {
@@ -72,51 +74,55 @@ namespace GeneticAlgorithmTest
             BestGuessTextBox.Text = bestGuess.GetGenes();
         }
 
-        private void PhraseToGuessTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void StartBtn_Click(object sender, EventArgs e)
         {
             ResetTimer();
+
             try
             {
                 phraseToGuess = Helpers.CheckPhraseLegitimacy(PhraseToGuessTextBox.Text);
                 population = Value2.Text;
                 mutationRate = Value3.Text;
-
-                Output($"Starting with values {population} and {mutationRate}");
-
-                SwapBetweenStartAndStop();
-
-                SetUpLabels();
-
-                GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, this);
-
-                algorithm.Run();
             }
             catch (InputFieldValueException ex)
             {
                 Output(ex.Message);
             }
+
+            Output($"Starting with values {population} and {mutationRate}");
+
+            SetUpLabels();
+
+            GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, this);
+
+            GeneticAlgorithm.cancellationToken = false;
+            SwapBetweenStartAndStop();
+
+            algorithm.Run();
         }
 
         private void SetUpLabels()
         {
-                timer.Enabled = true;
-                DrawFitness();
-                DrawGeneration();
+            timer.Enabled = true;
+            DrawFitness();
+            DrawGeneration();
         }
 
         private void StopBtn_Click(object sender, EventArgs e)
         {
+            Output("Stopping.");
+            StopExcecuting();
+        }
+
+        public void StopExcecuting()
+        {
+            GeneticAlgorithm.cancellationToken = true;
+
             timer.Enabled = false;
             currentGen = 0;
             bestGuess = null;
-            
+
             SwapBetweenStartAndStop();
-            Output("Stopped!");
         }
 
         private void ResetTimer()
@@ -139,7 +145,7 @@ namespace GeneticAlgorithmTest
             }
         }
 
-        private static void Output(string s)
+        public static void Output(string s)
         {
             var form = Form.ActiveForm as Form1;
             if (form != null) form.DetailTextBox.Text += s + "\n";
@@ -148,23 +154,39 @@ namespace GeneticAlgorithmTest
         private void SwapBetweenStartAndStop()
         {
             SwapStartAndStopButtons();
-            SwapFieldAccessibility();
         }
 
-        private void SwapFieldAccessibility()
+        private void SwapFieldAccessibility(bool enabled)
         {
-            PhraseToGuessTextBox.Enabled = !PhraseToGuessTextBox.Enabled;
-            Value2.Enabled = !Value2.Enabled;
-            Value3.Enabled = !Value3.Enabled;
+            PhraseToGuessTextBox.Enabled = enabled;
+            Value2.Enabled = enabled;
+            Value3.Enabled = enabled;
         }
 
         private void SwapStartAndStopButtons()
         {
-            StartBtn.Visible = !StartBtn.Visible;
-            StartBtn.Enabled = !StartBtn.Enabled;
+            if (GeneticAlgorithm.cancellationToken)
+            {
+                StartBtn.Visible = true;
+                StartBtn.Enabled = true;
 
-            StopBtn.Visible = !StopBtn.Visible;
-            StopBtn.Enabled = !StopBtn.Enabled;
+                StopBtn.Visible = false;
+                StopBtn.Enabled = false;
+
+                SwapFieldAccessibility(true);
+            }
+            else
+            {
+                StartBtn.Visible = false;
+                StartBtn.Enabled = false;
+
+                StopBtn.Visible = true;
+                StopBtn.Enabled = true;
+
+                SwapFieldAccessibility(false);
+            }
+
+
         }
     }
 }

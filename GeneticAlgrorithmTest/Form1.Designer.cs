@@ -34,7 +34,7 @@
             this.Value2 = new System.Windows.Forms.TextBox();
             this.Value3 = new System.Windows.Forms.TextBox();
             this.Label1 = new System.Windows.Forms.Label();
-            this.Label2 = new System.Windows.Forms.Label();
+            this.Population = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
             this.DetailTextBox = new System.Windows.Forms.RichTextBox();
             this.BestGuessTextBox = new System.Windows.Forms.TextBox();
@@ -72,7 +72,7 @@
             this.PhraseToGuessTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.PhraseToGuessTextBox.Size = new System.Drawing.Size(374, 20);
             this.PhraseToGuessTextBox.TabIndex = 0;
-            this.PhraseToGuessTextBox.TextChanged += new System.EventHandler(this.PhraseToGuessTextBox_TextChanged);
+            this.PhraseToGuessTextBox.Text = "asdfasdf";
             // 
             // Value2
             // 
@@ -91,29 +91,29 @@
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(187, 49);
+            this.Label1.Location = new System.Drawing.Point(190, 49);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(83, 13);
             this.Label1.TabIndex = 3;
             this.Label1.Text = "Phrase to guess";
             // 
-            // Label2
+            // Population
             // 
-            this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(69, 109);
-            this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(40, 13);
-            this.Label2.TabIndex = 3;
-            this.Label2.Text = "Value2";
+            this.Population.AutoSize = true;
+            this.Population.Location = new System.Drawing.Point(58, 109);
+            this.Population.Name = "Population";
+            this.Population.Size = new System.Drawing.Size(57, 13);
+            this.Population.TabIndex = 3;
+            this.Population.Text = "Population";
             // 
             // Label3
             // 
             this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(212, 109);
+            this.Label3.Location = new System.Drawing.Point(195, 109);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(40, 13);
+            this.Label3.Size = new System.Drawing.Size(69, 13);
             this.Label3.TabIndex = 3;
-            this.Label3.Text = "Value3";
+            this.Label3.Text = "Mutation rate";
             // 
             // DetailTextBox
             // 
@@ -192,7 +192,7 @@
             this.Controls.Add(this.BestGuessTextBox);
             this.Controls.Add(this.DetailTextBox);
             this.Controls.Add(this.Label3);
-            this.Controls.Add(this.Label2);
+            this.Controls.Add(this.Population);
             this.Controls.Add(this.CurrentGuessLabel);
             this.Controls.Add(this.Label1);
             this.Controls.Add(this.Value3);
@@ -215,7 +215,7 @@
         private System.Windows.Forms.TextBox Value2;
         private System.Windows.Forms.TextBox Value3;
         private System.Windows.Forms.Label Label1;
-        private System.Windows.Forms.Label Label2;
+        private System.Windows.Forms.Label Population;
         private System.Windows.Forms.Label Label3;
         private System.Windows.Forms.Label CurrentGuessLabel;
         private System.Windows.Forms.RichTextBox DetailTextBox;

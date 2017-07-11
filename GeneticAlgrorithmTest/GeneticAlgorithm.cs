@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using GeneticAlgorithmTest;
 
@@ -14,6 +15,7 @@ namespace GeneticAlgorithmTest
 
         private Form1 form;
 
+        public static Boolean cancellationToken;
         public GeneticAlgorithm(string phraseToGuess, string pop, string mutRate, Form1 form)
         {
             this.phraseToGuess = phraseToGuess;
@@ -27,8 +29,9 @@ namespace GeneticAlgorithmTest
         {
             dna = new DNA(chromosomeLength, population);
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 2000; i++)
             {
+                if (cancellationToken) break;
                 dna.SelectionAndCrossOver();
 
                 dna.CalculateFitnessesFor(phraseToGuess);
@@ -37,8 +40,16 @@ namespace GeneticAlgorithmTest
 
                 dna.Mutation(mutationRate);
 
-                await Task.Delay(50);
+                if (dna.GetBestGuess().GetFitness() == phraseToGuess.Length)
+                {
+                    Form1.Output($"Match found! Stopping excecution.");
+                    break;
+                }
+
+                await Task.Delay(10);
             }
+
+            form.StopExcecuting();
         }
     }
 }

@@ -50,9 +50,9 @@ namespace GeneticAlgorithmTest
 
         public static char ReturnRandomChar()
         {
-            int randomAlphabetInAscii = (randomAlphabetInAscii = rng.Next(65, 114)) > 90
+            int randomAlphabetInAscii = (randomAlphabetInAscii = rng.Next(64, 114)) > 90 //Skip over 6 ASCII-characters that aren't alphabets
                 ? randomAlphabetInAscii + 6
-                : randomAlphabetInAscii;
+                : randomAlphabetInAscii == 64 ? ' ' : randomAlphabetInAscii;
 
             return (char)randomAlphabetInAscii;
         }
@@ -87,16 +87,24 @@ namespace GeneticAlgorithmTest
         public static Chromosome[] MutateDna(decimal mutationRate, Chromosome[] chromosomes)
         {
             string newGene = "";
-
+            bool needToMutate = false;
             foreach (Chromosome chromosome in chromosomes)
             {
                 for (int i = 0; i < chromosome.GetGenes().Length; i++)
                 {
                     if (rng.Next(0, 100) > mutationRate * 100) newGene += chromosome.GetGenes()[i];
-                    else newGene += ReturnRandomChar();
+                    else
+                    {
+                        needToMutate = true;
+                        newGene += ReturnRandomChar();
+                    }
                 }
-
-                chromosome.Mutate(newGene);
+                if (needToMutate)
+                {
+                    chromosome.Mutate(newGene);
+                    needToMutate = false;
+                }
+                newGene = "";
             }
             return chromosomes;
         }
