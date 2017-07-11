@@ -13,19 +13,20 @@ namespace GeneticAlgrorithmTest
     public partial class Form1 : Form
     {
         private string phraseToGuess;
+
         private string value2
         {
-            set => Value2.Text = Helpers.ReturnValidField2Value(value);
-            get => Value2.Text;
+            set { Value2.Text = Helpers.ReturnValidField2Value(value); }
+            get { return Value2.Text; }
         }
 
         private string value3
         {
-            set => Value3.Text = Helpers.ReturnValidField3Value(value);
-            get => Value3.Text;
+            set { Value3.Text = Helpers.ReturnValidField3Value(value); }
+            get { return Value3.Text; }
         }
 
-        public const string DefaultValue2 ="10";
+        public const string DefaultValue2 = "10";
         public const string DefaultValue3 = "10";
 
         public Form1()
@@ -43,10 +44,10 @@ namespace GeneticAlgrorithmTest
             try
             {
                 phraseToGuess = Helpers.CheckPhraseLegitimacy(PhraseToGuessTextBox.Text);
-                value2 = Helpers.ReturnValidField2Value(Value2.Text);
-                value3 = Helpers.ReturnValidField3Value(Value3.Text);
+                value2 = Value2.Text;
+                value3 = Value3.Text;
 
-                 Output($"Starting with values {value2} and {value3}");
+                Output($"Starting with values {value2} and {value3}");
 
                 SwapBetweenStartAndStop();
 
