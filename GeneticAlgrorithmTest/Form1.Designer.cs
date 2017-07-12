@@ -120,8 +120,12 @@
             // 
             // DetailTextBox
             // 
+            this.DetailTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.DetailTextBox.HideSelection = false;
             this.DetailTextBox.Location = new System.Drawing.Point(40, 259);
             this.DetailTextBox.Name = "DetailTextBox";
+            this.DetailTextBox.ReadOnly = true;
+            this.DetailTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.DetailTextBox.Size = new System.Drawing.Size(374, 148);
             this.DetailTextBox.TabIndex = 4;
             this.DetailTextBox.TabStop = false;

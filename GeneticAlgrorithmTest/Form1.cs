@@ -91,12 +91,12 @@ namespace GeneticAlgorithmTest
                 mutationRate = MutationRateTextBox.Text;
                 elitePct = ElitePctTextBox.Text;
 
+                GeneticAlgorithm.cancellationToken = false;
                 Output(GetStartOutputString());
                 SetUpLabels();
                 SwapBetweenStartAndStop();
 
                 GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, elitePct, this);
-                GeneticAlgorithm.cancellationToken = false;
 
                 algorithm.Run();
             }
@@ -112,7 +112,7 @@ namespace GeneticAlgorithmTest
                        $"and elite percentage = {(int)(Numeric(elitePct) * 100)}%,\nSyntax = ";
 
             if (!AllowUpperCaseAndSpaces) s += "only lower-case letters allowed.";
-            else if (AllowAllAsciiCharacters) s += "all ASCII-characters allowed.";
+            else if (AllowAllAsciiCharacters) s += "all Ascii-characters allowed.";
             else s += "only alphabets and spaces allowed.";
 
             return s;
@@ -164,8 +164,8 @@ namespace GeneticAlgorithmTest
 
         public static void Output(string s)
         {
-            var form = Form.ActiveForm as Form1;
-            if (form != null) form.DetailTextBox.Text += s + "\n";
+            var form = ActiveForm as Form1;
+            if (form != null) form.DetailTextBox.AppendText(s + "\n");
         }
 
         private void SwapBetweenStartAndStop()
