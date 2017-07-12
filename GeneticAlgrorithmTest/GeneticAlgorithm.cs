@@ -16,7 +16,7 @@ namespace GeneticAlgorithmTest
         private Form1 form;
 
         public int maximumGeneration = 5000;
-        public static Boolean cancellationToken;
+        public static bool cancellationToken;
         public GeneticAlgorithm(string phraseToGuess, string pop, string mutRate, string elitePct, Form1 form)
         {
             this.phraseToGuess = phraseToGuess;
@@ -44,14 +44,14 @@ namespace GeneticAlgorithmTest
 
                 if (dna.GetBestGuess().GetFitness() == phraseToGuess.Length)
                 {
-                    Form1.Output($"Match found! Stopping excecution.\n");
+                    Form1.Output($"Match for '{phraseToGuess}' found! Stopping execution.\n");
                     break;
                 }
 
                 await Task.Delay(10);
             }
 
-            form.StopExcecuting();
+            form.StopExecuting();
         }
     }
 }

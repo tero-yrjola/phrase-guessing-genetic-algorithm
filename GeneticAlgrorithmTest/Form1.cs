@@ -127,11 +127,11 @@ namespace GeneticAlgorithmTest
 
         private void StopBtn_Click(object sender, EventArgs e)
         {
-            StopExcecuting();
+            StopExecuting();
             Output("Stopped.\n");
         }
 
-        public void StopExcecuting()
+        public void StopExecuting()
         {
             GeneticAlgorithm.cancellationToken = true;
 
