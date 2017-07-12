@@ -6,11 +6,11 @@ namespace GeneticAlgorithmTest
 {
     public class GeneticAlgorithm
     {
-        private string phraseToGuess;
-        private int population;
-        private int chromosomeLength;
-        private decimal mutationRate;
-        private decimal elitePct;
+        private readonly string phraseToGuess;
+        private readonly int population;
+        private readonly int chromosomeLength;
+        private readonly decimal mutationRate;
+        private readonly decimal elitePct;
         private DNA dna;
 
         private Form1 form;

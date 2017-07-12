@@ -35,7 +35,7 @@ namespace GeneticAlgorithmTest
         public const string DefaultPopulation = "1000";
         public const string DefaultPercentage = "0,1";
 
-        public bool AllowUpperCaseAndSpaces;
+        public bool AllowUpperCase;
         public bool AllowAllAsciiCharacters;
 
         public Form1()
@@ -83,8 +83,8 @@ namespace GeneticAlgorithmTest
 
             try
             {
-                Helpers.AllowUpperCaseAndSpaces = AllowUpperCaseAndSpaces;
-                AllASCIICharacters = AllowAllAsciiCharacters;
+                Helpers.AllowUpperCase = AllowUpperCase;
+                AllAsciiCharacters = AllowAllAsciiCharacters;
 
                 phraseToGuess = CheckPhraseLegitimacy(PhraseToGuessTextBox.Text);
                 population = PopulationTextBox.Text;
@@ -111,9 +111,9 @@ namespace GeneticAlgorithmTest
             string s = $"Starting with following values: \nPopulation = {population}, mutation rate = {(int)(Numeric(mutationRate) * 100)}% " +
                        $"and elite percentage = {(int)(Numeric(elitePct) * 100)}%,\nSyntax = ";
 
-            if (!AllowUpperCaseAndSpaces) s += "only lower-case letters allowed.";
+            if (!AllowUpperCase) s += "only lower-case letters allowed.";
             else if (AllowAllAsciiCharacters) s += "all Ascii-characters allowed.";
-            else s += "only alphabets and spaces allowed.";
+            else s += "only alphabets allowed.";
 
             return s;
         }
@@ -127,8 +127,8 @@ namespace GeneticAlgorithmTest
 
         private void StopBtn_Click(object sender, EventArgs e)
         {
-            Output("Stopping.");
             StopExcecuting();
+            Output("Stopped.\n");
         }
 
         public void StopExcecuting()
@@ -154,18 +154,17 @@ namespace GeneticAlgorithmTest
             currentGen++;
 
             var form = Form.ActiveForm as Form1;
-            if (form != null)
-            {
-                DrawBestGuess();
-                DrawFitness();
-                DrawGeneration();
-            }
+            if (form == null) return;
+
+            DrawBestGuess();
+            DrawFitness();
+            DrawGeneration();
         }
 
         public static void Output(string s)
         {
             var form = ActiveForm as Form1;
-            if (form != null) form.DetailTextBox.AppendText(s + "\n");
+            form?.DetailTextBox.AppendText(s + "\n");
         }
 
         private void SwapBetweenStartAndStop()
@@ -205,10 +204,10 @@ namespace GeneticAlgorithmTest
             }
         }
 
-        private void UpperCaseAndSpacesCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void UpperCaseCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            AllowUpperCaseAndSpaces = UpperCaseAndSpacesCheckBox.Checked;
-            if (AllowUpperCaseAndSpaces) AllASCIICheckBox.Enabled = true;
+            AllowUpperCase = UpperCaseCheckBox.Checked;
+            if (AllowUpperCase) AllASCIICheckBox.Enabled = true;
             else
             {
                 AllASCIICheckBox.Checked = false;

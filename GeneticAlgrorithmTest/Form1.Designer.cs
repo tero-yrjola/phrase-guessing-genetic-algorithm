@@ -46,7 +46,7 @@
             this.ElitePctTextBox = new System.Windows.Forms.TextBox();
             this.ElitePctLabel = new System.Windows.Forms.Label();
             this.AllASCIICheckBox = new System.Windows.Forms.CheckBox();
-            this.UpperCaseAndSpacesCheckBox = new System.Windows.Forms.CheckBox();
+            this.UpperCaseCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // TitleLabel
@@ -207,7 +207,7 @@
             // 
             this.AllASCIICheckBox.AutoSize = true;
             this.AllASCIICheckBox.Enabled = false;
-            this.AllASCIICheckBox.Location = new System.Drawing.Point(223, 164);
+            this.AllASCIICheckBox.Location = new System.Drawing.Point(184, 164);
             this.AllASCIICheckBox.Name = "AllASCIICheckBox";
             this.AllASCIICheckBox.Size = new System.Drawing.Size(147, 17);
             this.AllASCIICheckBox.TabIndex = 9;
@@ -215,23 +215,23 @@
             this.AllASCIICheckBox.UseVisualStyleBackColor = true;
             this.AllASCIICheckBox.CheckedChanged += new System.EventHandler(this.AllASCIICheckBox_CheckedChanged);
             // 
-            // UpperCaseAndSpacesCheckBox
+            // UpperCaseCheckBox
             // 
-            this.UpperCaseAndSpacesCheckBox.AutoSize = true;
-            this.UpperCaseAndSpacesCheckBox.Location = new System.Drawing.Point(40, 164);
-            this.UpperCaseAndSpacesCheckBox.Name = "UpperCaseAndSpacesCheckBox";
-            this.UpperCaseAndSpacesCheckBox.Size = new System.Drawing.Size(174, 17);
-            this.UpperCaseAndSpacesCheckBox.TabIndex = 9;
-            this.UpperCaseAndSpacesCheckBox.Text = "Allow spaces and capital letters";
-            this.UpperCaseAndSpacesCheckBox.UseVisualStyleBackColor = true;
-            this.UpperCaseAndSpacesCheckBox.CheckedChanged += new System.EventHandler(this.UpperCaseAndSpacesCheckBox_CheckedChanged);
+            this.UpperCaseCheckBox.AutoSize = true;
+            this.UpperCaseCheckBox.Location = new System.Drawing.Point(40, 164);
+            this.UpperCaseCheckBox.Name = "UpperCaseCheckBox";
+            this.UpperCaseCheckBox.Size = new System.Drawing.Size(138, 17);
+            this.UpperCaseCheckBox.TabIndex = 9;
+            this.UpperCaseCheckBox.Text = "Allow upper-case letters";
+            this.UpperCaseCheckBox.UseVisualStyleBackColor = true;
+            this.UpperCaseCheckBox.CheckedChanged += new System.EventHandler(this.UpperCaseCheckBox_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(455, 419);
-            this.Controls.Add(this.UpperCaseAndSpacesCheckBox);
+            this.Controls.Add(this.UpperCaseCheckBox);
             this.Controls.Add(this.AllASCIICheckBox);
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.FitnessLabel);
@@ -277,7 +277,7 @@
         private System.Windows.Forms.TextBox ElitePctTextBox;
         private System.Windows.Forms.Label ElitePctLabel;
         private System.Windows.Forms.CheckBox AllASCIICheckBox;
-        private System.Windows.Forms.CheckBox UpperCaseAndSpacesCheckBox;
+        private System.Windows.Forms.CheckBox UpperCaseCheckBox;
     }
 }
 

@@ -1,6 +1,4 @@
-﻿using GeneticAlgorithmTest;
-
-namespace GeneticAlgorithmTest
+﻿namespace GeneticAlgorithmTest
 {
     public class Chromosome
     {

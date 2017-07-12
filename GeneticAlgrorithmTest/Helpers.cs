@@ -9,19 +9,19 @@ namespace GeneticAlgorithmTest
     {
         private static readonly Random rng = new Random();
 
-        public static bool AllowUpperCaseAndSpaces = false;
-        public static bool AllASCIICharacters = false;
+        public static bool AllowUpperCase = false;
+        public static bool AllAsciiCharacters = false;
         public static string ReturnValidPopulation(string valueString)
         {
             try
             {
                 return string.IsNullOrWhiteSpace(valueString) ? DefaultPopulation :
-                    Numeric(valueString) <= 0 || Numeric(valueString) >= 1000000
-                        ? DefaultPopulation : valueString;
+                    Numeric(valueString) <= 0 || Numeric(valueString) >= 1000001
+                        ? throw new FormatException() : valueString;
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
-                throw new InputFieldValueException("Population has to be an integer between 0 and 1,000,000.");
+                throw new InputFieldValueException("Population has to be an integer between 1 and 1,000,000.");
             }
         }
 
@@ -33,9 +33,9 @@ namespace GeneticAlgorithmTest
             {
                 return string.IsNullOrWhiteSpace(valueString) ? DefaultPercentage :
                     Numeric(valueString) <= 0 || Numeric(valueString) >= 1
-                        ? DefaultPercentage : valueString;
+                        ? throw new FormatException() : valueString;
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 throw new InputFieldValueException("Mutation rate / elite percentage has to be a decimal between 0 and 1.");
             }
@@ -43,9 +43,9 @@ namespace GeneticAlgorithmTest
 
         public static string CheckPhraseLegitimacy(string s)
         {
-            if (AllowUpperCaseAndSpaces)
+            if (AllowUpperCase)
             {
-                if (AllASCIICharacters)
+                if (AllAsciiCharacters)
                 {
                     if (s.Any(ch => ch < 127)) return s;
                 }
@@ -64,13 +64,16 @@ namespace GeneticAlgorithmTest
 
         public static char ReturnRandomChar()
         {
-            if (AllASCIICharacters) return (char)rng.Next(32, 127);
+            if (AllAsciiCharacters) return (char)rng.Next(32, 127);
 
             int randomAlphabetInAscii = (randomAlphabetInAscii = rng.Next(64, 114)) > 90 //Skip over 6 ASCII-characters that aren't alphabets
                 ? randomAlphabetInAscii + 6
                 : randomAlphabetInAscii == 64 ? ' ' : randomAlphabetInAscii;
 
-            return (char)randomAlphabetInAscii;
+            if (AllowUpperCase) return (char)randomAlphabetInAscii;
+
+            return char.ToLower((char)randomAlphabetInAscii);
+
         }
 
         public static decimal Numeric(object T)
