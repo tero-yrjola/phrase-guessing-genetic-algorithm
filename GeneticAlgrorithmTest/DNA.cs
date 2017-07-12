@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using GeneticAlgorithmTest;
-using MoreLinq;
+﻿using System.Linq;
 
 namespace GeneticAlgorithmTest
 {

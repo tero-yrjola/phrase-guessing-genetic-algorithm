@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Windows.Forms;
-using GeneticAlgorithmTest;
 using static GeneticAlgorithmTest.Form1;
 
 namespace GeneticAlgorithmTest
@@ -11,12 +8,15 @@ namespace GeneticAlgorithmTest
     public class Helpers
     {
         private static readonly Random rng = new Random();
+
+        public static bool AllowUpperCaseAndSpaces = false;
+        public static bool AllASCIICharacters = false;
         public static string ReturnValidPopulation(string valueString)
         {
             try
             {
                 return string.IsNullOrWhiteSpace(valueString) ? DefaultPopulation :
-                    Convert.ToInt32(valueString) <= 0 || Convert.ToInt32(valueString) >= 1000000
+                    Numeric(valueString) <= 0 || Numeric(valueString) >= 1000000
                         ? DefaultPopulation : valueString;
             }
             catch (FormatException ex)
@@ -32,7 +32,7 @@ namespace GeneticAlgorithmTest
             try
             {
                 return string.IsNullOrWhiteSpace(valueString) ? DefaultPercentage :
-                    Convert.ToDecimal(valueString) <= 0 || Convert.ToDecimal(valueString) >= 1
+                    Numeric(valueString) <= 0 || Numeric(valueString) >= 1
                         ? DefaultPercentage : valueString;
             }
             catch (FormatException ex)
@@ -43,18 +43,39 @@ namespace GeneticAlgorithmTest
 
         public static string CheckPhraseLegitimacy(string s)
         {
-            if (s.Any(ch => char.IsLetter(ch) || ch == ' ')) return s;
+            if (AllowUpperCaseAndSpaces)
+            {
+                if (AllASCIICharacters)
+                {
+                    if (s.Any(ch => ch < 127)) return s;
+                }
+                else
+                {
+                    if (s.Any(ch => char.IsLetter(ch) || ch == ' ')) return s;
+                }
+            }
+            else
+            {
+                if (s.Any(char.IsLower)) return s;
+            }
 
             throw new InputFieldValueException("Phrase invalid!");
         }
 
         public static char ReturnRandomChar()
         {
+            if (AllASCIICharacters) return (char)rng.Next(32, 127);
+
             int randomAlphabetInAscii = (randomAlphabetInAscii = rng.Next(64, 114)) > 90 //Skip over 6 ASCII-characters that aren't alphabets
                 ? randomAlphabetInAscii + 6
                 : randomAlphabetInAscii == 64 ? ' ' : randomAlphabetInAscii;
 
             return (char)randomAlphabetInAscii;
+        }
+
+        public static decimal Numeric(object T)
+        {
+            return Convert.ToDecimal(T.ToString());
         }
 
         public static Chromosome[] CrossOverElites(Chromosome[] elites, int amount)
