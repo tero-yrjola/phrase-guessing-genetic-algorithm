@@ -47,16 +47,16 @@ namespace GeneticAlgorithmTest
             {
                 if (AllAsciiCharacters)
                 {
-                    if (s.Any(ch => ch < 127)) return s;
+                    if (s.All(ch => ch < 127)) return s;
                 }
                 else
                 {
-                    if (s.Any(ch => char.IsLetter(ch) || ch == ' ')) return s;
+                    if (s.All(ch => char.IsLetter(ch) || ch == ' ')) return s;
                 }
             }
             else
             {
-                if (s.Any(char.IsLower)) return s;
+                if (s.All(ch => char.IsLower(ch) || ch == ' ')) return s;
             }
 
             throw new InputFieldValueException("Phrase invalid!");
