@@ -48,7 +48,7 @@ namespace GeneticAlgorithmTest
             for (int i = 0; i < phraseToGuess.Length; i++)
             {
                 if (genes[i] == phraseToGuess[i]) matchingScore++;
-                else if (Helpers.IsNearAsciiChar(genes[i], phraseToGuess[i])) matchingScore += 0.5m;
+                else if (Helpers.Near(genes[i], phraseToGuess[i])) matchingScore += 0.5m;
             }
 
             fitness = matchingScore;

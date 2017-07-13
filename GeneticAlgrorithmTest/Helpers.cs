@@ -7,7 +7,7 @@ namespace GeneticAlgorithmTest
 
     public class Helpers
     {
-        private static readonly Random rng = new Random();
+        public static Random rng = new Random();
 
         public static bool AllowUpperCase = false;
         public static bool AllAsciiCharacters = false;
@@ -78,78 +78,148 @@ namespace GeneticAlgorithmTest
 
         public static char ReturnRandomChar()
         {
-            if (AllAsciiCharacters) return (char) rng.Next(32, 127);
+            if (AllAsciiCharacters) return (char)rng.Next(32, 127);
 
             int randomAlphabetInAscii =
-                (randomAlphabetInAscii = rng.Next(64, 114)) > 90 //Skip over 6 ASCII-characters that aren't alphabets
-                    ? randomAlphabetInAscii + 6
+                (randomAlphabetInAscii = rng.Next(64, 114)) > 90
+                    ? randomAlphabetInAscii + 6                     //Skip over 6 ASCII-characters that aren't alphabets
                     : randomAlphabetInAscii == 64
-                        ? ' '
+                        ? ' '                                       // If Ascii code is 64, convert it to a space
                         : randomAlphabetInAscii;
 
-            if (AllowUpperCase) return (char) randomAlphabetInAscii;
+            if (AllowUpperCase) return (char)randomAlphabetInAscii;
 
-            return char.ToLower((char) randomAlphabetInAscii);
+            return char.ToLower((char)randomAlphabetInAscii);
         }
+
+        /*Logic is to generate a random number from ASCII-codes + 6. If the extra 6 get hit, then those hits get converted
+         to a neighbouring alphabet or a change in case.*/
         public static char ReturnGeneticallyCloseChar(char currentCharacter)
         {
             if (AllAsciiCharacters)
             {
                 return RandomAsciiCharWithNearLogic(currentCharacter);
             }
+            if (AllowUpperCase)
+            {
+                return RandomUpperCaseCharWithNearLogic(currentCharacter);
+            }
 
+            return RandomLowerCaseCharacterWithNearLogic(currentCharacter);
+        }
+
+        private static char RandomLowerCaseCharacterWithNearLogic(char currentCharacter)
+        {
+            return char.ToLower(RandomUpperCaseCharWithNearLogic(currentCharacter));
+        }
+
+        private static char RandomUpperCaseCharWithNearLogic(char currentCharacter)
+        {
             int randomAlphabetInAscii =
-                (randomAlphabetInAscii = rng.Next(64, 114)) > 90 //Skip over 6 ASCII-characters that aren't alphabets
-                    ? randomAlphabetInAscii + 6
+                (randomAlphabetInAscii = rng.Next(64, 120)) > 90 
+                    ? randomAlphabetInAscii + 6                         //Skip over 6 ASCII-characters that aren't alphabets
                     : randomAlphabetInAscii == 64
                         ? ' '
                         : randomAlphabetInAscii;
+            if (randomAlphabetInAscii > 114)
+            {
+                randomAlphabetInAscii = ConvertToCorrectNearUpperCaseCharacter(currentCharacter, randomAlphabetInAscii);
+            }
+            return (char)randomAlphabetInAscii;
+        }
 
-            if (AllowUpperCase) return (char) randomAlphabetInAscii;
+        private static int ConvertToCorrectNearUpperCaseCharacter(char currentCharacter, int randomAlphabetInAscii)
+        {
+            switch (randomAlphabetInAscii)
+            {
+                case 114:
+                case 115:
+                    randomAlphabetInAscii = currentCharacter - 1;                                       //One Ascii code smaller
+                    break;
 
-            return char.ToLower((char) randomAlphabetInAscii);
+                case 116:
+                case 117:
+                    if (char.IsLower(currentCharacter)) randomAlphabetInAscii = currentCharacter - 32; //If lowercase, convert to uppercase and vice-versa
+                    else randomAlphabetInAscii = currentCharacter + 32;
+                    break;
+
+                case 118:
+                case 119:
+                    randomAlphabetInAscii = currentCharacter + 1;                                       //One Ascii code bigger
+                    break;
+            }
+
+            return randomAlphabetInAscii < 65 ? 126 :
+                randomAlphabetInAscii > 126 ? 65 : randomAlphabetInAscii;
         }
 
         private static char RandomAsciiCharWithNearLogic(char currentCharacter)
         {
-            int s = rng.Next(32, 133);
+            int randomAscii = rng.Next(32, 133);
 
-            if (s > 126)
+            if (randomAscii > 126)
             {
-                s = ConvertToCorrectNearAsciiCharacter(currentCharacter, s);
+                randomAscii = ConvertToCorrectNearAsciiCharacter(currentCharacter, randomAscii);
             }
 
-            return (char)s;
+            return (char)randomAscii;
         }
 
-        private static int ConvertToCorrectNearAsciiCharacter(char currentCharacter, int s)
+        private static int ConvertToCorrectNearAsciiCharacter(char currentCharacter, int randomAscii)
         {
-            switch (s)
+            switch (randomAscii)
             {
                 case 127:
                 case 128:
-                    s = currentCharacter - 1;                                       //One Ascii code smaller
+                    randomAscii = currentCharacter - 1;                                       //One Ascii code smaller
                     break;
 
                 case 129:
                 case 130:
-                    if (char.IsLower(currentCharacter)) s = currentCharacter - 32; //If lowercase, convert to uppercase and vice-versa
-                    else s = currentCharacter + 32;
+                    if (char.IsLower(currentCharacter)) randomAscii = currentCharacter - 32; //If lowercase, convert to uppercase and vice-versa
+                    else randomAscii = currentCharacter + 32;
                     break;
 
                 case 131:
                 case 132:
-                    s = currentCharacter + 1;                                       //One Ascii code bigger
+                    randomAscii = currentCharacter + 1;                                       //One Ascii code bigger
                     break;
             }
 
-            return s;
+            return randomAscii < 65 ? 126 :                                                 //If over threshold value, roll over
+                randomAscii > 126 ? 65 : 
+                randomAscii;
         }
 
-        public static bool IsNearAsciiChar(char c1, char c2)
+        /*The method calculates if two characters are next to eachother. 
+         * It uses Ascii codes (32-126) so '{' is a neighbour of 'z'. It also rolls over ('~' neighbours ' ').
+         * This also means that in lower-case 'a' neighbours 'z', but in upper-case it does not.
+         * Only one step ("Move 1 step in Ascii" OR "change case") is allowed. Therefore 'a' and 'B' are NOT neighbours.
+         * Only exception is when a rollover happens in uppercase-mode from 'a' to 'Z' or vice-versa.*/
+        public static bool Near(char c1, char c2)
         {
-            int character = Math.Abs(c1 - c2);
-            if (character == 1 || character == 32) return true;
+            int difference;
+
+            if (AllAsciiCharacters)
+            {
+                difference = Math.Abs(c1 - c2);
+                if (difference == 1 || difference == 32) return true;
+                else if ((c1 == 32 && c2 == 126) || (c1 == 126 && c2 == 32)) return true;
+                return false;
+            }
+
+            if (AllowUpperCase)
+            {
+                difference = Math.Abs(c1 - c2);
+                if (difference == 1 || difference == 32) return true;
+                else if ((c1 == 65 && c2 == 122) || (c1 == 122 && c2 == 65) ||
+                         (c1 == 97 && c2 == 90) || (c1 == 90 && c2 == 97)) return true;
+                return false;
+            }
+
+            difference = Math.Abs(c1 - c2);
+            if (difference == 1) return true;
+            else if ((c1 == 97 && c2 == 122) || (c1 == 122 && c2 == 97)) return true;
             return false;
         }
 
