@@ -14,9 +14,11 @@ namespace GeneticAlgorithmTest
         private DNA dna;
 
         private Form1 form;
+        private bool advancedMutation;
 
         public int maximumGeneration = 5000;
         public static bool cancellationToken;
+
         public GeneticAlgorithm(string phraseToGuess, string pop, string mutRate, string elitePct, Form1 form)
         {
             this.phraseToGuess = phraseToGuess;
@@ -40,7 +42,8 @@ namespace GeneticAlgorithmTest
 
                 form.UpdateFormValues(dna.GetBestGuess());
 
-                dna.Mutation(mutationRate);
+                if (!advancedMutation) dna.Mutation(mutationRate);
+                else dna.AdvancedMutation(mutationRate);
 
                 if (dna.GetBestGuess().GetFitness() == phraseToGuess.Length)
                 {

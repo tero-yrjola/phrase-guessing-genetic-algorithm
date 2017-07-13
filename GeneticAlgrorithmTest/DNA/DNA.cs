@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using static GeneticAlgorithmTest.EvolutionMethods;
 
 namespace GeneticAlgorithmTest
 {
@@ -53,14 +54,19 @@ namespace GeneticAlgorithmTest
 
             bestGuess = elites[0];
 
-            var crossOverChildren = Helpers.CrossOverElites(elites, population - numberOfElites);
+            var crossOverChildren = CrossOverElites(elites, population - numberOfElites);
 
             chromosomes = elites.Concat(crossOverChildren).ToArray();
         }
 
         public void Mutation(decimal mutationRate)
         {
-            chromosomes = Helpers.MutateDna(mutationRate, chromosomes);
+            chromosomes = MutateDna(mutationRate, chromosomes);
+        }
+
+        public void AdvancedMutation(decimal mutationRate)
+        {
+            chromosomes = MutateDnaAdvanced(mutationRate, chromosomes);
         }
     }
 }
