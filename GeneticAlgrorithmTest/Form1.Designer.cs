@@ -237,6 +237,7 @@
             this.advancedEvolutionCheckBox.TabIndex = 10;
             this.advancedEvolutionCheckBox.Text = "Advanced \r\n Evolution";
             this.advancedEvolutionCheckBox.UseVisualStyleBackColor = true;
+            this.advancedEvolutionCheckBox.CheckedChanged += new System.EventHandler(this.advancedEvolutionCheckBox_CheckedChanged);
             // 
             // Form1
             // 

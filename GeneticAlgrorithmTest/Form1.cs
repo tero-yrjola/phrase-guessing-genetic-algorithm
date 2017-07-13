@@ -220,5 +220,10 @@ namespace GeneticAlgorithmTest
         {
             AllowAllAsciiCharacters = AllASCIICheckBox.Checked;
         }
+
+        private void advancedEvolutionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            AdvancedEvolution = advancedEvolutionCheckBox.Checked;
+        }
     }
 }
