@@ -47,6 +47,7 @@
             this.ElitePctLabel = new System.Windows.Forms.Label();
             this.AllASCIICheckBox = new System.Windows.Forms.CheckBox();
             this.UpperCaseCheckBox = new System.Windows.Forms.CheckBox();
+            this.advancedEvolutionCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // TitleLabel
@@ -207,7 +208,7 @@
             // 
             this.AllASCIICheckBox.AutoSize = true;
             this.AllASCIICheckBox.Enabled = false;
-            this.AllASCIICheckBox.Location = new System.Drawing.Point(184, 164);
+            this.AllASCIICheckBox.Location = new System.Drawing.Point(267, 170);
             this.AllASCIICheckBox.Name = "AllASCIICheckBox";
             this.AllASCIICheckBox.Size = new System.Drawing.Size(147, 17);
             this.AllASCIICheckBox.TabIndex = 9;
@@ -218,7 +219,7 @@
             // UpperCaseCheckBox
             // 
             this.UpperCaseCheckBox.AutoSize = true;
-            this.UpperCaseCheckBox.Location = new System.Drawing.Point(40, 164);
+            this.UpperCaseCheckBox.Location = new System.Drawing.Point(123, 170);
             this.UpperCaseCheckBox.Name = "UpperCaseCheckBox";
             this.UpperCaseCheckBox.Size = new System.Drawing.Size(138, 17);
             this.UpperCaseCheckBox.TabIndex = 9;
@@ -226,11 +227,23 @@
             this.UpperCaseCheckBox.UseVisualStyleBackColor = true;
             this.UpperCaseCheckBox.CheckedChanged += new System.EventHandler(this.UpperCaseCheckBox_CheckedChanged);
             // 
+            // advancedEvolutionCheckBox
+            // 
+            this.advancedEvolutionCheckBox.AutoSize = true;
+            this.advancedEvolutionCheckBox.Location = new System.Drawing.Point(39, 163);
+            this.advancedEvolutionCheckBox.MaximumSize = new System.Drawing.Size(80, 0);
+            this.advancedEvolutionCheckBox.Name = "advancedEvolutionCheckBox";
+            this.advancedEvolutionCheckBox.Size = new System.Drawing.Size(78, 30);
+            this.advancedEvolutionCheckBox.TabIndex = 10;
+            this.advancedEvolutionCheckBox.Text = "Advanced \r\n Evolution";
+            this.advancedEvolutionCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(455, 419);
+            this.Controls.Add(this.advancedEvolutionCheckBox);
             this.Controls.Add(this.UpperCaseCheckBox);
             this.Controls.Add(this.AllASCIICheckBox);
             this.Controls.Add(this.TimeLabel);
@@ -278,6 +291,7 @@
         private System.Windows.Forms.Label ElitePctLabel;
         private System.Windows.Forms.CheckBox AllASCIICheckBox;
         private System.Windows.Forms.CheckBox UpperCaseCheckBox;
+        private System.Windows.Forms.CheckBox advancedEvolutionCheckBox;
     }
 }
 

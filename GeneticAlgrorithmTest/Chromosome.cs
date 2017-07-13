@@ -1,9 +1,11 @@
-﻿namespace GeneticAlgorithmTest
+﻿using System;
+
+namespace GeneticAlgorithmTest
 {
     public class Chromosome
     {
         private string genes;
-        private int fitness;
+        private decimal fitness;
 
         public Chromosome()
         {
@@ -16,7 +18,7 @@
             this.genes = genes;
             this.fitness = 0;
         }
-        public int GetFitness()
+        public decimal GetFitness()
         {
             return fitness;
         }
@@ -26,7 +28,7 @@
             return genes;
         }
 
-        public int CalculateFitness(string phraseToGuess)
+        public decimal CalculateFitness(string phraseToGuess)
         {
             int matchingLetters = 0;
 
@@ -39,7 +41,20 @@
 
             return fitness;
         }
+        public decimal CalculateAdvancedFitness(string phraseToGuess)
+        {
+            decimal matchingScore = 0;
 
+            for (int i = 0; i < phraseToGuess.Length; i++)
+            {
+                if (genes[i] == phraseToGuess[i]) matchingScore++;
+                else if (Helpers.IsNearAsciiChar(genes[i], phraseToGuess[i])) matchingScore += 0.5m;
+            }
+
+            fitness = matchingScore;
+
+            return fitness;
+        }
         public void Generate(int chromosomeLength)
         {
             var newGenes = "";

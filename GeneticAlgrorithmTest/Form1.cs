@@ -37,6 +37,7 @@ namespace GeneticAlgorithmTest
 
         public bool AllowUpperCase;
         public bool AllowAllAsciiCharacters;
+        public bool AdvancedEvolution;
 
         public Form1()
         {
@@ -96,7 +97,7 @@ namespace GeneticAlgorithmTest
                 SetUpLabels();
                 SwapBetweenStartAndStop();
 
-                GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, elitePct, this);
+                GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, elitePct, AdvancedEvolution, this);
 
                 algorithm.Run();
             }

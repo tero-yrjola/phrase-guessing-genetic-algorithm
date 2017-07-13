@@ -146,6 +146,13 @@ namespace GeneticAlgorithmTest
             return s;
         }
 
+        public static bool IsNearAsciiChar(char c1, char c2)
+        {
+            int character = Math.Abs(c1 - c2);
+            if (character == 1 || character == 32) return true;
+            return false;
+        }
+
         public static decimal Numeric(object T)
         {
             return Convert.ToDecimal(T.ToString());

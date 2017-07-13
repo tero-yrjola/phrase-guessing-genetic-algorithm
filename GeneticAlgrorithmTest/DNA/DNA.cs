@@ -28,6 +28,14 @@ namespace GeneticAlgorithmTest
             }
         }
 
+        public void CalculateAdvancedFitnessesFor(string phraseToGuess)
+        {
+            foreach (Chromosome chromosome in chromosomes)
+            {
+                chromosome.CalculateAdvancedFitness(phraseToGuess);
+            }
+        }
+
         public Chromosome GetBestGuess()
         {
             return bestGuess;
@@ -49,7 +57,7 @@ namespace GeneticAlgorithmTest
 
         public void SelectionAndCrossOver(decimal elitePct)
         {
-            var numberOfElites = (int) (population * elitePct + 0.5m);
+            var numberOfElites = (int)(population * elitePct + 0.5m);
             var elites = chromosomes.OrderByDescending(c => c.GetFitness()).Take(numberOfElites).ToArray();
 
             bestGuess = elites[0];
