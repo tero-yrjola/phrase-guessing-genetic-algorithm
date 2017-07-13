@@ -57,13 +57,22 @@ namespace GeneticAlgorithmTest.Tests
             Assert.That(Helpers.Near('x', 'g'), Is.EqualTo(false));
             Helpers.AllowUpperCase = true;
             Assert.That(Helpers.Near('a', 'Z'), Is.EqualTo(true));
-            Assert.That(Helpers.Near('Z', 'a'), Is.EqualTo(true));
-            Assert.That(Helpers.Near('d', 'e'), Is.EqualTo(true));
-            Assert.That(Helpers.Near('e', 'd'), Is.EqualTo(true));
-            Assert.That(Helpers.Near('a', 'z'), Is.EqualTo(true));
-            Assert.That(Helpers.Near('a', 'z'), Is.EqualTo(false));
-            Assert.That(Helpers.Near('z', 'a'), Is.EqualTo(false));
-            Assert.That(Helpers.Near('x', 'g'), Is.EqualTo(false));
+            Assert.That(Helpers.Near('b', 'a'), Is.EqualTo(true));
+            Assert.That(Helpers.Near('E', 'e'), Is.EqualTo(true));
+            Assert.That(Helpers.Near('e', 'E'), Is.EqualTo(true));
+            Assert.That(Helpers.Near('A', 'z'), Is.EqualTo(true));
+            Assert.That(Helpers.Near('z', 'z'), Is.EqualTo(false));
+            Assert.That(Helpers.Near('a', 'B'), Is.EqualTo(false));
+            Assert.That(Helpers.Near('a', 'c'), Is.EqualTo(false));
+            Helpers.AllAsciiCharacters = true;
+            Assert.That(Helpers.Near(' ', '~'), Is.EqualTo(true));
+            Assert.That(Helpers.Near('~', ' '), Is.EqualTo(true));
+            Assert.That(Helpers.Near('~', '}'), Is.EqualTo(true));
+            Assert.That(Helpers.Near('2', 'R'), Is.EqualTo(true)); //TODO this happens because the case-switching (+32 in Ascii)
+            Assert.That(Helpers.Near('j', 'J'), Is.EqualTo(true));
+            Assert.That(Helpers.Near('s', 'z'), Is.EqualTo(false));
+            Assert.That(Helpers.Near('a', 'B'), Is.EqualTo(false));
+            Assert.That(Helpers.Near('~', '!'), Is.EqualTo(false));
         }
 
         public void ArrangeRngToReturn(int returnValue)
