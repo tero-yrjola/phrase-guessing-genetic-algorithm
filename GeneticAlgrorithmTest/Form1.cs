@@ -85,7 +85,7 @@ namespace GeneticAlgorithmTest
             try
             {
                 Helpers.AllowUpperCase = AllowUpperCase;
-                AllAsciiCharacters = AllowAllAsciiCharacters;
+                Helpers.AllAsciiCharacters = AllowAllAsciiCharacters;
 
                 phraseToGuess = CheckPhraseLegitimacy(PhraseToGuessTextBox.Text);
                 population = PopulationTextBox.Text;
