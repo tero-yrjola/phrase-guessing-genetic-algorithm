@@ -12,6 +12,9 @@ namespace GeneticAlgorithmTest
         public static bool AllowUpperCase = false;
         public static bool AllAsciiCharacters = false;
 
+        private const string LowerCaseCharactersString = " abcdefghijklmnopqrstuvwxyz";
+        private const string UpperCaseCharactersString = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private const string AllAsciiCharactersString = " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
         public static string ReturnValidPopulation(string valueString)
         {
             try
