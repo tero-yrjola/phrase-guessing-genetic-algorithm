@@ -26,7 +26,7 @@ namespace GeneticAlgorithmTest.Tests
             Helpers.AllAsciiCharacters = false;
             Helpers.AllowUpperCase = false;
 
-            for (int i = 96; i < 123; i++)
+            for (int i = 0; i < 27; i++)
             {
                 ArrangeRngToReturn(i);
                 list.Add(Helpers.ReturnRandomChar());
@@ -35,10 +35,10 @@ namespace GeneticAlgorithmTest.Tests
             list.ToString();
             list.Clear();
 
-            for (int i = 96; i < 127; i++)
+            for (int i = 0; i < 31; i++)
             {
                 ArrangeRngToReturn(i);
-                list.Add(Helpers.ReturnGeneticallyCloseChar('a'));
+                list.Add(Helpers.ReturnGeneticallyCloseChar(' '));
             }
 
             list.ToString();
@@ -48,7 +48,7 @@ namespace GeneticAlgorithmTest.Tests
             Helpers.AllAsciiCharacters = false;
             Helpers.AllowUpperCase = true;
 
-            for (int i = 64; i < 117; i++)
+            for (int i = 0; i < 53; i++)
             {
                 ArrangeRngToReturn(i);
                 list.Add(Helpers.ReturnRandomChar());
@@ -57,7 +57,7 @@ namespace GeneticAlgorithmTest.Tests
             list.ToString();
             list.Clear();
 
-            for (int i = 64; i < 123; i++)
+            for (int i = 0; i < 59; i++)
             {
                 ArrangeRngToReturn(i);
                 list.Add(Helpers.ReturnGeneticallyCloseChar('a'));
@@ -69,7 +69,7 @@ namespace GeneticAlgorithmTest.Tests
             /** FOR ALL **/
             Helpers.AllAsciiCharacters = true;
 
-            for (int i = 32; i < 127; i++)
+            for (int i = 0; i < 95; i++)
             {
                 ArrangeRngToReturn(i);
                 list.Add(Helpers.ReturnRandomChar());
@@ -78,12 +78,15 @@ namespace GeneticAlgorithmTest.Tests
             list.ToString();
             list.Clear();
 
-            for (int i = 32; i < 133; i++)
+            for (int i = 0; i < 101; i++)
             {
                 ArrangeRngToReturn(i);
-                list.Add(Helpers.ReturnRandomChar());
+                list.Add(Helpers.ReturnGeneticallyCloseChar('a'));
             }
+
+            list.ToString();
         }
+
         public void ArrangeRngToReturn(int returnValue)
         {
             testRng.Next(Arg.Any<int>(), Arg.Any<int>()).Returns(returnValue);
