@@ -17,6 +17,7 @@ namespace GeneticAlgorithmTest
         private const string UpperCaseCharactersString = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string AllAsciiCharactersString = " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
+        private static int numberOfCurrentAlphabets;
 
         private static string currentSetOfAlphabets
         {
@@ -28,7 +29,6 @@ namespace GeneticAlgorithmTest
             }
         }
 
-        private static int numberOfCurrentAlphabets;
         private static int numberOfNeighbours
         {
             get
@@ -127,11 +127,11 @@ namespace GeneticAlgorithmTest
         {
             if (randomIndex == numberOfCurrentAlphabets ||
                 randomIndex == numberOfCurrentAlphabets + 1)
-            return RotateRight(LowerCaseCharactersString)[LowerCaseCharactersString.IndexOf(currentCharacter)];
+            return RotateRight(currentSetOfAlphabets)[currentSetOfAlphabets.IndexOf(currentCharacter)];
 
             if (randomIndex == numberOfCurrentAlphabets +2 ||
                 randomIndex == numberOfCurrentAlphabets +3)
-                return RotateLeft(LowerCaseCharactersString)[LowerCaseCharactersString.IndexOf(currentCharacter)];
+                return RotateLeft(currentSetOfAlphabets)[currentSetOfAlphabets.IndexOf(currentCharacter)];
 
             return ChangeCase(currentCharacter);
         }
@@ -146,34 +146,14 @@ namespace GeneticAlgorithmTest
 
         public static bool Near(char c1, char c2)
         {
-            if (Math.Abs(c1 - c2) == 1) return true; //neighbours
+            if (Math.Abs(currentSetOfAlphabets.IndexOf(c1) - currentSetOfAlphabets.IndexOf(c2)) <= 1) return true;
 
-            if (AllAsciiCharacters)
-            {
-                if (ChangeCase(c1) == c2) return true; //different case, same letter
-                //neighbours by rolling over
-                return false;
-            }
+            if (ChangeCase(c1) == c2) return true;
 
-            if (AllowUpperCase)
-            {
-                //    if (c1 == ' ') c1 = (char)64;                                              //space is Ascii code 32, convert that
-                //    if (c2 == ' ') c2 = (char)64;
+            if (Math.Abs(RotateRight(currentSetOfAlphabets).IndexOf(c1) -
+                         RotateRight(currentSetOfAlphabets).IndexOf(c2)) <= 1) return true;
 
-                //    difference = Math.Abs(c1 - c2);
-                //    if (difference == 1 || difference == 32) return true;
-                //    else if ((c1 == 64 && c2 == 122) || (c1 == 122 && c2 == 64) ||
-                //             (c1 == 97 && c2 == 90) || (c1 == 90 && c2 == 97)) return true;
-                //    return false;
-                //}
-                //if (c1 == ' ') c1 = (char)96;
-                //if (c2 == ' ') c2 = (char)96;
-
-                //difference = Math.Abs(c1 - c2);
-                //if (difference == 1) return true;
-                //else if ((c1 == 96 && c2 == 122) || (c1 == 122 && c2 == 96)) return true;
-                
-            }return false;
+            return false;
         }
 
         public static decimal Numeric(object T)
