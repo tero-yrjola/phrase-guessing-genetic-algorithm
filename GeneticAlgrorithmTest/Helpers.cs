@@ -138,9 +138,8 @@ namespace GeneticAlgorithmTest
 
         /*The method calculates if two characters are next to eachother. 
          * Alphabet starts from ' ' and then (in lower case) a, b, c ... y, z.
-         * It uses Ascii codes (32-126) so '{' is a neighbour of 'z'. It also rolls over ('~' neighbours ' ').
-         * This also means that in lower-case 'a' neighbours ' ', but in upper-case it does not.
-         * Only one step ("Move 1 step in Ascii" OR "change case") is allowed. Therefore 'a' and 'B' are NOT neighbours.
+         * Rollovers can happen, so ' ' is a neighbour (in lower case) of 'z'.
+         * Only one step ("Move 1 step in alphabet" OR "change case") is allowed. Therefore 'a' and 'B' are NOT neighbours.
          * Special characters are neighbours with themselves.
          */
 
