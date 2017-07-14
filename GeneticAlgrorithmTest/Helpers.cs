@@ -80,16 +80,25 @@ namespace GeneticAlgorithmTest
         {
             if (AllAsciiCharacters) return (char)rng.Next(32, 127);
 
-            int randomAlphabetInAscii =
-                (randomAlphabetInAscii = rng.Next(64, 114)) > 90
-                    ? randomAlphabetInAscii + 6                     //Skip over 6 ASCII-characters that aren't alphabets
-                    : randomAlphabetInAscii == 64
-                        ? ' '                                       // If Ascii code is 64, convert it to a space
+            else if (AllowUpperCase)
+            {
+                int randomAlphabetInAscii =
+                    (randomAlphabetInAscii = rng.Next(64, 117)) > 90
+                        ? randomAlphabetInAscii + 6                     //Skip over 6 ASCII-characters that aren't alphabets
+                        : randomAlphabetInAscii == 64
+                            ? ' '                                       // If Ascii code is 64, convert it to a space
+                            : randomAlphabetInAscii;
+
+                return (char)randomAlphabetInAscii;
+            }
+            else
+            {
+                int randomAlphabetInAscii =
+                    (randomAlphabetInAscii = rng.Next(96, 123)) == 96
+                        ? ' ' 
                         : randomAlphabetInAscii;
-
-            if (AllowUpperCase) return (char)randomAlphabetInAscii;
-
             return char.ToLower((char)randomAlphabetInAscii);
+            }
         }
 
         /*Logic is to generate a random number from ASCII-codes + 6. If the extra 6 get hit, then those hits get converted
@@ -110,18 +119,49 @@ namespace GeneticAlgorithmTest
 
         private static char RandomLowerCaseCharacterWithNearLogic(char currentCharacter)
         {
-            return char.ToLower(RandomUpperCaseCharWithNearLogic(currentCharacter));
+            int randomAlphabetInAscii =
+                (randomAlphabetInAscii = rng.Next(96, 127)) == 96
+                    ? ' '
+                    : randomAlphabetInAscii;
+            if (randomAlphabetInAscii > 122)
+            {
+                randomAlphabetInAscii = ConvertToCorrectNearLowerCaseCharacter(currentCharacter, randomAlphabetInAscii);
+            }
+            return (char)randomAlphabetInAscii;
+        
+    }
+
+        private static int ConvertToCorrectNearLowerCaseCharacter(char currentCharacter, int randomAlphabetInAscii)
+        {
+            switch (randomAlphabetInAscii)
+            {
+                case 123:
+                case 124:
+                    if (currentCharacter == ' ') return 'z';
+                    randomAlphabetInAscii = currentCharacter - 1;                                       //One Ascii code smaller
+                    break;
+
+                case 125:
+                case 126:
+                    if (currentCharacter == ' ') return 'a';
+                    randomAlphabetInAscii = currentCharacter + 1;                                       //One Ascii code bigger
+                    break;
+            }
+
+            return randomAlphabetInAscii < 97 ? ' ' :
+                randomAlphabetInAscii > 122 ? ' ' : randomAlphabetInAscii;
         }
 
         private static char RandomUpperCaseCharWithNearLogic(char currentCharacter)
         {
+            if (currentCharacter == ' ') currentCharacter = (char) 64;
             int randomAlphabetInAscii =
-                (randomAlphabetInAscii = rng.Next(64, 120)) > 90 
+                (randomAlphabetInAscii = rng.Next(64, 128)) > 90
                     ? randomAlphabetInAscii + 6                         //Skip over 6 ASCII-characters that aren't alphabets
                     : randomAlphabetInAscii == 64
                         ? ' '
                         : randomAlphabetInAscii;
-            if (randomAlphabetInAscii > 114)
+            if (randomAlphabetInAscii > 122)
             {
                 randomAlphabetInAscii = ConvertToCorrectNearUpperCaseCharacter(currentCharacter, randomAlphabetInAscii);
             }
@@ -132,25 +172,29 @@ namespace GeneticAlgorithmTest
         {
             switch (randomAlphabetInAscii)
             {
-                case 114:
-                case 115:
+                case 123:
+                case 124:
+                    if (currentCharacter == 64) return 'z';
                     randomAlphabetInAscii = currentCharacter - 1;                                       //One Ascii code smaller
+                    randomAlphabetInAscii = randomAlphabetInAscii < 65 ? ' ' : randomAlphabetInAscii;
                     break;
 
-                case 116:
-                case 117:
+                case 125:
+                case 126:
+                    if (currentCharacter == 64) return ' ';
                     if (char.IsLower(currentCharacter)) randomAlphabetInAscii = currentCharacter - 32; //If lowercase, convert to uppercase and vice-versa
                     else randomAlphabetInAscii = currentCharacter + 32;
                     break;
 
-                case 118:
-                case 119:
+                case 127:
+                case 128:
+                    if (currentCharacter == 64) return 'A';
                     randomAlphabetInAscii = currentCharacter + 1;                                       //One Ascii code bigger
+                    randomAlphabetInAscii = randomAlphabetInAscii > 122 ? ' ' : randomAlphabetInAscii;
                     break;
             }
 
-            return randomAlphabetInAscii < 65 ? 126 :
-                randomAlphabetInAscii > 126 ? 65 : randomAlphabetInAscii;
+            return randomAlphabetInAscii;
         }
 
         private static char RandomAsciiCharWithNearLogic(char currentCharacter)
@@ -187,15 +231,17 @@ namespace GeneticAlgorithmTest
             }
 
             return randomAscii < 65 ? 126 :                                                 //If over threshold value, roll over
-                randomAscii > 126 ? 65 : 
+                randomAscii > 126 ? 65 :
                 randomAscii;
         }
 
         /*The method calculates if two characters are next to eachother. 
+         * Alphabet starts from ' ' and then (in lower case) a, b, c ... y, z.
          * It uses Ascii codes (32-126) so '{' is a neighbour of 'z'. It also rolls over ('~' neighbours ' ').
-         * This also means that in lower-case 'a' neighbours 'z', but in upper-case it does not.
+         * This also means that in lower-case 'a' neighbours ' ', but in upper-case it does not.
          * Only one step ("Move 1 step in Ascii" OR "change case") is allowed. Therefore 'a' and 'B' are NOT neighbours.
-         * Only exception is when a rollover happens in uppercase-mode from 'a' to 'Z' or vice-versa.*/
+         */
+
         public static bool Near(char c1, char c2)
         {
             int difference;
@@ -203,23 +249,29 @@ namespace GeneticAlgorithmTest
             if (AllAsciiCharacters)
             {
                 difference = Math.Abs(c1 - c2);
-                if (difference == 1 || difference == 32) return true;
-                else if ((c1 == 32 && c2 == 126) || (c1 == 126 && c2 == 32)) return true;
+                if (difference == 1) return true;                                           //neighbours
+                else if (char.ToLower(c2).Equals(char.ToLower(c1))) return true;            //different case, same letter
+                else if ((c1 == 32 && c2 == 126) || (c1 == 126 && c2 == 32)) return true;   //neighbours by rolling over
                 return false;
             }
 
             if (AllowUpperCase)
             {
+                if (c1 == ' ') c1 = (char)64;                                              //space is Ascii code 32, convert that
+                if (c2 == ' ') c2 = (char)64;
+
                 difference = Math.Abs(c1 - c2);
                 if (difference == 1 || difference == 32) return true;
-                else if ((c1 == 65 && c2 == 122) || (c1 == 122 && c2 == 65) ||
+                else if ((c1 == 64 && c2 == 122) || (c1 == 122 && c2 == 64) ||
                          (c1 == 97 && c2 == 90) || (c1 == 90 && c2 == 97)) return true;
                 return false;
             }
+            if (c1 == ' ') c1 = (char)96;
+            if (c2 == ' ') c2 = (char)96;
 
             difference = Math.Abs(c1 - c2);
             if (difference == 1) return true;
-            else if ((c1 == 97 && c2 == 122) || (c1 == 122 && c2 == 97)) return true;
+            else if ((c1 == 96 && c2 == 122) || (c1 == 122 && c2 == 96)) return true;
             return false;
         }
 
