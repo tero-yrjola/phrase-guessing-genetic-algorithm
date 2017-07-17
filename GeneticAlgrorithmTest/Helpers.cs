@@ -33,8 +33,8 @@ namespace GeneticAlgorithmTest
         {
             get
             {
-                if (!AllowUpperCase) return 4;
-                else return 6;
+                if (!AllowUpperCase) return 12;
+                else return 18;
             }
         }
 
@@ -44,9 +44,9 @@ namespace GeneticAlgorithmTest
             {
                 string s = string.IsNullOrWhiteSpace(valueString)
                     ? DefaultPopulation
-                    : Numeric(valueString) <= 0 || Numeric(valueString) >= 1000001
-                        ? "-1"
-                        : valueString;
+                    : IsInRange((int)Numeric(valueString), 0, 1000001)
+                        ? valueString
+                        : "-1";
 
                 if (s == "-1") throw new FormatException();
                 return s;
@@ -65,9 +65,9 @@ namespace GeneticAlgorithmTest
             {
                 string s = string.IsNullOrWhiteSpace(valueString)
                     ? DefaultPercentage
-                    : Numeric(valueString) <= 0 || Numeric(valueString) >= 1
-                        ? "-1"
-                        : valueString;
+                    : IsInRange((int) Numeric(valueString), 0, 1)
+                        ? valueString
+                        : "-1";
 
                 if (s == "-1") throw new FormatException();
                 return s;
@@ -121,16 +121,14 @@ namespace GeneticAlgorithmTest
             else randomIndex = currentSetOfAlphabets[randomIndex];
 
             return (char)randomIndex;
-            }
+        }
 
         private static int ConvertToCorrectNearCharacter(char currentCharacter, int randomIndex)
         {
-            if (randomIndex == numberOfCurrentAlphabets ||
-                randomIndex == numberOfCurrentAlphabets + 1)
-            return RotateRight(currentSetOfAlphabets)[currentSetOfAlphabets.IndexOf(currentCharacter)];
+            if (IsInRange(randomIndex, numberOfCurrentAlphabets, numberOfCurrentAlphabets + 5))
+                return RotateRight(currentSetOfAlphabets)[currentSetOfAlphabets.IndexOf(currentCharacter)];
 
-            if (randomIndex == numberOfCurrentAlphabets +2 ||
-                randomIndex == numberOfCurrentAlphabets +3)
+            if (IsInRange(randomIndex, numberOfCurrentAlphabets + 6, numberOfCurrentAlphabets + 11))
                 return RotateLeft(currentSetOfAlphabets)[currentSetOfAlphabets.IndexOf(currentCharacter)];
 
             return ChangeCase(currentCharacter);
@@ -162,8 +160,8 @@ namespace GeneticAlgorithmTest
 
         public static char ChangeCase(char c)
         {
-            if (65 <= c && c <= 90) return (char)(c + 32);
-            if (97 <= c && c <= 122) return (char)(c - 32);
+            if (IsInRange(c, 65, 90)) return (char)(c + 32);
+            if (IsInRange(c, 97, 122)) return (char)(c - 32);
             return c;
         }
 
@@ -175,6 +173,11 @@ namespace GeneticAlgorithmTest
         public static string RotateRight(string s)
         {
             return s.Substring(s.Length - 1) + s.Substring(0, s.Length - 1);
+        }
+
+        private static bool IsInRange(int numberToCheck, int bottom, int top)
+        {
+                return bottom <= numberToCheck && numberToCheck <= top;
         }
 
         public class InputFieldValueException : Exception

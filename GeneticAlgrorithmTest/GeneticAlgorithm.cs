@@ -36,12 +36,12 @@ namespace GeneticAlgorithmTest
 
             for (int i = 0; i < maximumGeneration; i++)
             {
-                if (cancellationToken) break;
-                dna.SelectionAndCrossOver(elitePct);
-
                 if (!advancedEvolution) dna.CalculateFitnessesFor(phraseToGuess);
                 else dna.CalculateAdvancedFitnessesFor(phraseToGuess);
 
+                if (cancellationToken) break;
+                dna.SelectionAndCrossOver(elitePct);
+                
                 form.UpdateFormValues(dna.GetBestGuess());
 
                 if (!advancedEvolution) dna.Mutation(mutationRate);
