@@ -10,23 +10,23 @@ namespace GeneticAlgorithmTest
         private readonly int population;
         private readonly int chromosomeLength;
         private readonly decimal mutationRate;
-        private readonly decimal elitePct;
+        private readonly decimal eliteRate;
         private readonly bool advancedEvolution;
         private int currentGeneration;
         private DNA dna;
 
-        private Form1 form;
+        private Window form;
 
         public int maximumGeneration = 5000;
         public static bool cancellationToken;
 
-        public GeneticAlgorithm(string phraseToGuess, string pop, string mutRate, string elitePct, bool advancedEvolution, Form1 form)
+        public GeneticAlgorithm(string phraseToGuess, string pop, string mutRate, string eliteRate, bool advancedEvolution, Window form)
         {
             this.phraseToGuess = phraseToGuess;
             this.chromosomeLength = phraseToGuess.Length;
             this.population = Convert.ToInt32(pop);
             this.mutationRate = Numeric(mutRate);
-            this.elitePct = Numeric(elitePct);
+            this.eliteRate = Numeric(eliteRate);
             this.advancedEvolution = advancedEvolution;
             this.form = form;
             }
@@ -35,13 +35,13 @@ namespace GeneticAlgorithmTest
         {
             dna = new DNA(chromosomeLength, population);
 
-            for (int i = 0; i < maximumGeneration; i++)
+            for (int currentGen = 0; currentGen < maximumGeneration; currentGen++)
             {
                 if (!advancedEvolution) dna.CalculateFitnessesFor(phraseToGuess);
                 else dna.CalculateAdvancedFitnessesFor(phraseToGuess);
 
                 if (cancellationToken) break;
-                dna.SelectionAndCrossOver(elitePct);
+                dna.SelectionAndCrossOver(eliteRate);
                 
                 form.UpdateFormValues(dna.GetBestGuess());
 
@@ -50,7 +50,7 @@ namespace GeneticAlgorithmTest
 
                 if (dna.GetBestGuess().GetFitness() == phraseToGuess.Length)
                 {
-                    Form1.Output($"Match for '{phraseToGuess}' found! Stopping execution.\n");
+                    Window.Output($"Match for '{phraseToGuess}' found in generation {currentGen+1}!\nExecuting stopped.\n");
                     break;
                 }
 

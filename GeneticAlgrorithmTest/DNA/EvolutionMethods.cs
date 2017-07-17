@@ -41,7 +41,8 @@ namespace GeneticAlgorithmTest
             {
                 for (int i = 0; i < chromosome.GetGenes().Length; i++)
                 {
-                    if (rng.Next(0, 100) > mutationRate * 100) newGene += chromosome.GetGenes()[i];
+                    var x = rng.Next(0, 100);
+                    if (x >= mutationRate * 100) newGene += chromosome.GetGenes()[i];
                     else
                     {
                         needToMutate = true;

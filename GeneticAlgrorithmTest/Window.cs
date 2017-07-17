@@ -5,15 +5,19 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace GeneticAlgorithmTest
 {
-    public partial class Form1 : Form
+    public partial class Window : Form
     {
-        private string phraseToGuess;
         private int currentGen;
         private Chromosome bestGuess;
 
         private Timer timer;
         private int time;
 
+        private string phraseToGuess
+        {
+            set { PhraseToGuessTextBox.Text = ReturnValidPhrase(value); }
+            get { return PhraseToGuessTextBox.Text; }
+        }
         private string population
         {
             set { PopulationTextBox.Text = ReturnValidPopulation(value); }
@@ -26,20 +30,21 @@ namespace GeneticAlgorithmTest
             get { return MutationRateTextBox.Text; }
         }
 
-        private string elitePct
+        private string eliteRate
         {
-            set { ElitePctTextBox.Text = ReturnValidPercentage(value); }
-            get { return ElitePctTextBox.Text; }
+            set { EliteRateTextBox.Text = ReturnValidPercentage(value); }
+            get { return EliteRateTextBox.Text; }
         }
 
         public const string DefaultPopulation = "1000";
-        public const string DefaultPercentage = "0,1";
+        public const string DefaultPercentage = "0,05";
+        public const string DefaultPhrase = "this is a default phrase";
 
         public bool AllowUpperCase;
         public bool AllowAllAsciiCharacters;
         public bool AdvancedEvolution;
 
-        public Form1()
+        public Window()
         {
             InitializeComponent();
             MaximizeBox = false;
@@ -50,6 +55,35 @@ namespace GeneticAlgorithmTest
             timer.Interval = 1000;
             timer.Tick += timer_Tick;
             timer.Enabled = false;
+        }
+
+        private void StartBtn_Click(object sender, EventArgs e)
+        {
+            ResetTimer();
+
+            try
+            {
+                Helpers.AllowUpperCase = AllowUpperCase;
+                Helpers.AllAsciiCharacters = AllowAllAsciiCharacters;
+
+                phraseToGuess = ReturnValidPhrase(PhraseToGuessTextBox.Text);
+                population = PopulationTextBox.Text;
+                mutationRate = MutationRateTextBox.Text;
+                eliteRate = EliteRateTextBox.Text;
+
+                GeneticAlgorithm.cancellationToken = false;
+                Output(GetStartOutputString());
+                SetUpLabels();
+                SwapBetweenStartAndStop();
+
+                GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, eliteRate, AdvancedEvolution, this);
+
+                algorithm.Run();
+            }
+            catch (InputFieldValueException ex)
+            {
+                Output(ex.Message);
+            }
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -78,39 +112,10 @@ namespace GeneticAlgorithmTest
             BestGuessTextBox.Text = bestGuess.GetGenes();
         }
 
-        private void StartBtn_Click(object sender, EventArgs e)
-        {
-            ResetTimer();
-
-            try
-            {
-                Helpers.AllowUpperCase = AllowUpperCase;
-                Helpers.AllAsciiCharacters = AllowAllAsciiCharacters;
-
-                phraseToGuess = CheckPhraseLegitimacy(PhraseToGuessTextBox.Text);
-                population = PopulationTextBox.Text;
-                mutationRate = MutationRateTextBox.Text;
-                elitePct = ElitePctTextBox.Text;
-
-                GeneticAlgorithm.cancellationToken = false;
-                Output(GetStartOutputString());
-                SetUpLabels();
-                SwapBetweenStartAndStop();
-
-                GeneticAlgorithm algorithm = new GeneticAlgorithm(phraseToGuess, population, mutationRate, elitePct, AdvancedEvolution, this);
-
-                algorithm.Run();
-            }
-            catch (InputFieldValueException ex)
-            {
-                Output(ex.Message);
-            }
-        }
-
         private string GetStartOutputString()
         {
-            string s = $"Starting with following values: \nPopulation = {population}, mutation rate = {(int)(Numeric(mutationRate) * 100)}% " +
-                       $"and elite percentage = {(int)(Numeric(elitePct) * 100)}%,\nSyntax = ";
+            string s = $"Starting with following values: \nPopulation = {population}, mutation rate = {Numeric(mutationRate)} " +
+                       $"and elite rate = {Numeric(eliteRate)},\nSyntax = ";
 
             if (!AllowUpperCase) s += "only lower-case letters allowed.";
             else if (AllowAllAsciiCharacters) s += "all Ascii-characters allowed.";
@@ -154,9 +159,6 @@ namespace GeneticAlgorithmTest
             bestGuess = bestChromosome;
             currentGen++;
 
-            var form = Form.ActiveForm as Form1;
-            if (form == null) return;
-
             DrawBestGuess();
             DrawFitness();
             DrawGeneration();
@@ -164,7 +166,7 @@ namespace GeneticAlgorithmTest
 
         public static void Output(string s)
         {
-            var form = ActiveForm as Form1;
+            var form = ActiveForm as Window;
             form?.DetailTextBox.AppendText(s + "\n");
         }
 
@@ -178,7 +180,10 @@ namespace GeneticAlgorithmTest
             PhraseToGuessTextBox.Enabled = enabled;
             PopulationTextBox.Enabled = enabled;
             MutationRateTextBox.Enabled = enabled;
-            ElitePctTextBox.Enabled = enabled;
+            EliteRateTextBox.Enabled = enabled;
+            UpperCaseCheckBox.Enabled = enabled;
+            AllASCIICheckBox.Enabled = UpperCaseCheckBox.Checked && enabled;
+            advancedEvolutionCheckBox.Enabled = enabled;
         }
 
         private void SwapStartAndStopButtons()
@@ -208,6 +213,7 @@ namespace GeneticAlgorithmTest
         private void UpperCaseCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             AllowUpperCase = UpperCaseCheckBox.Checked;
+
             if (AllowUpperCase) AllASCIICheckBox.Enabled = true;
             else
             {
@@ -224,6 +230,15 @@ namespace GeneticAlgorithmTest
         private void advancedEvolutionCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             AdvancedEvolution = advancedEvolutionCheckBox.Checked;
+        }
+
+        private void OpenLink_Event(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://github.com/teroyrjola");
+            }
+            catch (Exception ex) { Output("Whoops, something just broke...\n" + ex.StackTrace); }
         }
     }
 }
