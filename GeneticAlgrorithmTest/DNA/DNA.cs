@@ -26,6 +26,8 @@ namespace GeneticAlgorithmTest
             {
                 chromosome.CalculateFitness(phraseToGuess);
             }
+
+            chromosomes = chromosomes.OrderByDescending(x => x.GetFitness()).ToArray();
         }
 
         public void CalculateAdvancedFitnessesFor(string phraseToGuess)
@@ -34,6 +36,8 @@ namespace GeneticAlgorithmTest
             {
                 chromosome.CalculateAdvancedFitness(phraseToGuess);
             }
+
+            chromosomes = chromosomes.OrderByDescending(x => x.GetFitness()).ToArray();
         }
 
         public Chromosome GetBestGuess()
@@ -58,7 +62,7 @@ namespace GeneticAlgorithmTest
         public void SelectionAndCrossOver(decimal elitePct)
         {
             var numberOfElites = (int)(population * elitePct + 0.5m);
-            var elites = chromosomes.OrderByDescending(c => c.GetFitness()).Take(numberOfElites).ToArray();
+            var elites = chromosomes.Take(numberOfElites).ToArray();
 
             bestGuess = elites[0];
 
@@ -72,9 +76,9 @@ namespace GeneticAlgorithmTest
             chromosomes = MutateDna(mutationRate, chromosomes);
         }
 
-        public void AdvancedMutation(decimal mutationRate)
+        public void AdvancedMutation(decimal mutationRate, int currentGeneration)
         {
-            chromosomes = MutateDnaAdvanced(mutationRate, chromosomes);
+            chromosomes = MutateDnaAdvanced(mutationRate, currentGeneration, chromosomes);
         }
     }
 }

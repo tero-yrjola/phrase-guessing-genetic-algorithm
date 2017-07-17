@@ -17,12 +17,12 @@ namespace GeneticAlgorithmTest.Tests
             Assert.That(testRng.Next(10, 20), Is.EqualTo(50));
         }
 
-        //In Ascii-mode, 96-99 give the neighbours and 100-101 switch case
+        //In Ascii-mode, 96-101 give the previous character, 102-107 give the next character and 108-113 switch case
         [TestCase(96, 'b', 'a')]
-        [TestCase(98, 'b', 'c')]
-        [TestCase(100, 'b', 'B')]
         [TestCase(96, ' ', '~')]
-        [TestCase(100, '!', '!')]
+        [TestCase(102, 'b', 'c')]
+        [TestCase(108, 'b', 'B')]
+        [TestCase(108, '!', '!')]
         public void GeneticallyCloseAsciiCharacterMappedCorrectly(int AsciiCode, char originalCharacter, char expectedResult)
         {
             Helpers.AllowUpperCase = true;
@@ -33,6 +33,20 @@ namespace GeneticAlgorithmTest.Tests
             Assert.That(result, Is.EqualTo(expectedResult));
         }
 
+        [TestCase(54, 'a', ' ')]
+        [TestCase(54, ' ', 'Z')]
+        [TestCase(60, 'b', 'c')]
+        [TestCase(60, 'z', 'A')]
+        [TestCase(66, 'b', 'B')]
+        public void GeneticallyCloseUpperCaseCharacterMappedCorrectly(int AsciiCode, char originalCharacter, char expectedResult)
+        {
+            Helpers.AllowUpperCase = true;
+            Helpers.AllAsciiCharacters = false;
+            ArrangeRngToReturn(AsciiCode);
+
+            var result = Helpers.ReturnGeneticallyCloseChar(originalCharacter);
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
 
         [TestCase('a', 'b', true)]
         [TestCase('a', ' ', true)]

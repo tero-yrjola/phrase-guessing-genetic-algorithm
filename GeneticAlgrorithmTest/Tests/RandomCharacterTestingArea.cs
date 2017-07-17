@@ -35,7 +35,7 @@ namespace GeneticAlgorithmTest.Tests
             list.ToString();
             list.Clear();
 
-            for (int i = 0; i < 31; i++)
+            for (int i = 0; i < 39; i++)
             {
                 ArrangeRngToReturn(i);
                 list.Add(Helpers.ReturnGeneticallyCloseChar(' '));
@@ -57,7 +57,7 @@ namespace GeneticAlgorithmTest.Tests
             list.ToString();
             list.Clear();
 
-            for (int i = 0; i < 59; i++)
+            for (int i = 0; i < 71; i++)
             {
                 ArrangeRngToReturn(i);
                 list.Add(Helpers.ReturnGeneticallyCloseChar('a'));
@@ -78,7 +78,7 @@ namespace GeneticAlgorithmTest.Tests
             list.ToString();
             list.Clear();
 
-            for (int i = 0; i < 101; i++)
+            for (int i = 0; i < 113; i++)
             {
                 ArrangeRngToReturn(i);
                 list.Add(Helpers.ReturnGeneticallyCloseChar('a'));

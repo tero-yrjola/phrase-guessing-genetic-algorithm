@@ -58,19 +58,23 @@ namespace GeneticAlgorithmTest
             return chromosomes;
         }
 
-        public static Chromosome[] MutateDnaAdvanced(decimal mutationRate, Chromosome[] chromosomes)
+        public static Chromosome[] MutateDnaAdvanced(decimal mutationRate, int currentGeneration, Chromosome[] chromosomes)
         {
             string newGene = "";
             bool needToMutate = false;
-            foreach (Chromosome chromosome in chromosomes)
+
+            for (var chromosomeIndex = (int)Math.Floor(Helpers.GetPercentageOfAlphas(currentGeneration) * chromosomes.Length); 
+                chromosomeIndex < chromosomes.Length; chromosomeIndex++)
             {
-                for (int i = 0; i < chromosome.GetGenes().Length; i++)
+                Chromosome chromosome = chromosomes[chromosomeIndex];
+
+                for (int geneIndex = 0; geneIndex < chromosome.GetGenes().Length; geneIndex++)
                 {
-                    if (rng.Next(0, 100) > mutationRate * 100) newGene += chromosome.GetGenes()[i];
+                    if (rng.Next(0, 100) > mutationRate * 100) newGene += chromosome.GetGenes()[geneIndex];
                     else
                     {
                         needToMutate = true;
-                        newGene += Helpers.ReturnGeneticallyCloseChar(chromosome.GetGenes()[i]);
+                        newGene += Helpers.ReturnGeneticallyCloseChar(chromosome.GetGenes()[geneIndex]);
                     }
                 }
                 if (needToMutate)
