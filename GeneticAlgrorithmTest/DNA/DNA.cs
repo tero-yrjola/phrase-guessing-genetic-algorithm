@@ -76,9 +76,9 @@ namespace GeneticAlgorithmTest
             chromosomes = MutateDna(mutationRate, chromosomes);
         }
 
-        public void AdvancedMutation(decimal mutationRate)
+        public void AdvancedMutation(decimal mutationRate, int currentGeneration)
         {
-            chromosomes = MutateDnaAdvanced(mutationRate, chromosomes);
+            chromosomes = MutateDnaAdvanced(mutationRate, currentGeneration, chromosomes);
         }
     }
 }

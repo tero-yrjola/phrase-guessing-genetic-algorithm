@@ -186,5 +186,11 @@ namespace GeneticAlgorithmTest
             {
             }
         }
+
+        public static double GetPercentageOfAlphas(int x)
+        {
+            double b = (Math.Tanh((x - 250.0) / 100.0) + 1.0) / 4.0;
+            return b;
+        }
     }
 }

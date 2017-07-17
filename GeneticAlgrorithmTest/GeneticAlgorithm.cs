@@ -12,6 +12,7 @@ namespace GeneticAlgorithmTest
         private readonly decimal mutationRate;
         private readonly decimal elitePct;
         private readonly bool advancedEvolution;
+        private int currentGeneration;
         private DNA dna;
 
         private Form1 form;
@@ -45,7 +46,7 @@ namespace GeneticAlgorithmTest
                 form.UpdateFormValues(dna.GetBestGuess());
 
                 if (!advancedEvolution) dna.Mutation(mutationRate);
-                else dna.AdvancedMutation(mutationRate);
+                else dna.AdvancedMutation(mutationRate, currentGeneration);
 
                 if (dna.GetBestGuess().GetFitness() == phraseToGuess.Length)
                 {
@@ -53,6 +54,7 @@ namespace GeneticAlgorithmTest
                     break;
                 }
 
+                currentGeneration++;
                 await Task.Delay(10);
             }
 

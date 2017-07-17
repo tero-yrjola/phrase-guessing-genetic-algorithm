@@ -58,12 +58,13 @@ namespace GeneticAlgorithmTest
             return chromosomes;
         }
 
-        public static Chromosome[] MutateDnaAdvanced(decimal mutationRate, Chromosome[] chromosomes)
+        public static Chromosome[] MutateDnaAdvanced(decimal mutationRate, int currentGeneration, Chromosome[] chromosomes)
         {
             string newGene = "";
             bool needToMutate = false;
 
-            for (var chromosomeIndex = 1; chromosomeIndex < chromosomes.Length; chromosomeIndex++)
+            for (var chromosomeIndex = (int)Math.Floor(Helpers.GetPercentageOfAlphas(currentGeneration) * chromosomes.Length); 
+                chromosomeIndex < chromosomes.Length; chromosomeIndex++)
             {
                 Chromosome chromosome = chromosomes[chromosomeIndex];
 
