@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NSubstitute.Exceptions;
-using static GeneticAlgorithmTest.Form1;
+using static GeneticAlgorithmTest.Window;
 
 namespace GeneticAlgorithmTest
 {
@@ -42,18 +42,18 @@ namespace GeneticAlgorithmTest
         {
             try
             {
-                string s = string.IsNullOrWhiteSpace(valueString)
+                string population = string.IsNullOrWhiteSpace(valueString)
                     ? DefaultPopulation
-                    : IsInRange((int)Numeric(valueString), 0, 1000001)
+                    : IsInRange((double)Numeric(valueString), 10, 1000001)
                         ? valueString
                         : "-1";
 
-                if (s == "-1") throw new FormatException();
-                return s;
+                if (population == "-1") throw new FormatException();
+                return population;
             }
             catch (FormatException)
             {
-                throw new InputFieldValueException("Population has to be an integer between 1 and 1,000,000.");
+                throw new InputFieldValueException("Population has to be an integer between 10 and 1,000,000.");
             }
         }
 
@@ -65,7 +65,7 @@ namespace GeneticAlgorithmTest
             {
                 string s = string.IsNullOrWhiteSpace(valueString)
                     ? DefaultPercentage
-                    : IsInRange((int) Numeric(valueString), 0, 1)
+                    : IsInRange((double)Numeric(valueString), 0, 1)
                         ? valueString
                         : "-1";
 
@@ -79,27 +79,28 @@ namespace GeneticAlgorithmTest
             }
         }
 
-        public static string CheckPhraseLegitimacy(string s)
+        public static string ReturnValidPhrase(string phrase)
         {
-            if (s?.Length < 1) throw new InputFieldValueException("Phrase invalid!");
+            if (phrase?.Length < 1) return DefaultPhrase;
 
             if (AllowUpperCase)
             {
                 if (AllAsciiCharacters)
                 {
-                    if (s.All(ch => ch < 127)) return s;
+                    if (phrase.All(ch => ch < 127)) return phrase;
+                    throw new InputFieldValueException("Only Ascii character codes from 32 to 126 allowed.");
                 }
                 else
                 {
-                    if (s.All(ch => char.IsLetter(ch) || ch == ' ')) return s;
+                    if (phrase.All(ch => char.IsLetter(ch) || ch == ' ')) return phrase;
+                    throw new InputFieldValueException("Only alphabets and spaces allowed.");
                 }
             }
             else
             {
-                if (s.All(ch => char.IsLower(ch) || ch == ' ')) return s;
+                if (phrase.All(ch => char.IsLower(ch) || ch == ' ')) return phrase;
+                throw new InputFieldValueException("Only lowercase characters and spaces allowed.");
             }
-
-            throw new InputFieldValueException("Phrase invalid!");
         }
 
         public static char ReturnRandomChar()
@@ -175,7 +176,7 @@ namespace GeneticAlgorithmTest
             return s.Substring(s.Length - 1) + s.Substring(0, s.Length - 1);
         }
 
-        private static bool IsInRange(int numberToCheck, int bottom, int top)
+        private static bool IsInRange(double numberToCheck, double bottom, double top)
         {
                 return bottom <= numberToCheck && numberToCheck <= top;
         }

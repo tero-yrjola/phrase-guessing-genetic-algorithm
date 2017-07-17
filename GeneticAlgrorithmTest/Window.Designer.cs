@@ -1,6 +1,8 @@
-﻿namespace GeneticAlgorithmTest
+﻿using System.Windows.Forms;
+
+namespace GeneticAlgorithmTest
 {
-    partial class Form1
+    partial class Window
     {
         /// <summary>
         /// Required designer variable.
@@ -33,9 +35,9 @@
             this.PhraseToGuessTextBox = new System.Windows.Forms.TextBox();
             this.PopulationTextBox = new System.Windows.Forms.TextBox();
             this.MutationRateTextBox = new System.Windows.Forms.TextBox();
-            this.Label1 = new System.Windows.Forms.Label();
-            this.Population = new System.Windows.Forms.Label();
-            this.Label3 = new System.Windows.Forms.Label();
+            this.PhraseLabel = new System.Windows.Forms.Label();
+            this.PopulationLabel = new System.Windows.Forms.Label();
+            this.MutationRateLabel = new System.Windows.Forms.Label();
             this.DetailTextBox = new System.Windows.Forms.RichTextBox();
             this.BestGuessTextBox = new System.Windows.Forms.TextBox();
             this.CurrentGuessLabel = new System.Windows.Forms.Label();
@@ -43,11 +45,13 @@
             this.GenerationLabel = new System.Windows.Forms.Label();
             this.FitnessLabel = new System.Windows.Forms.Label();
             this.TimeLabel = new System.Windows.Forms.Label();
-            this.ElitePctTextBox = new System.Windows.Forms.TextBox();
-            this.ElitePctLabel = new System.Windows.Forms.Label();
+            this.EliteRateTextBox = new System.Windows.Forms.TextBox();
+            this.EliteRateLabel = new System.Windows.Forms.Label();
             this.AllASCIICheckBox = new System.Windows.Forms.CheckBox();
             this.UpperCaseCheckBox = new System.Windows.Forms.CheckBox();
             this.advancedEvolutionCheckBox = new System.Windows.Forms.CheckBox();
+            this.CreatedByLabel2 = new System.Windows.Forms.LinkLabel();
+            this.CreatedByLabel1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TitleLabel
@@ -65,7 +69,7 @@
             this.StartBtn.Location = new System.Drawing.Point(325, 113);
             this.StartBtn.Name = "StartBtn";
             this.StartBtn.Size = new System.Drawing.Size(89, 42);
-            this.StartBtn.TabIndex = 4;
+            this.StartBtn.TabIndex = 7;
             this.StartBtn.Text = "Start";
             this.StartBtn.UseVisualStyleBackColor = true;
             this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
@@ -92,32 +96,32 @@
             this.MutationRateTextBox.Size = new System.Drawing.Size(80, 20);
             this.MutationRateTextBox.TabIndex = 2;
             // 
-            // Label1
+            // PhraseLabel
             // 
-            this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(190, 49);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(83, 13);
-            this.Label1.TabIndex = 3;
-            this.Label1.Text = "Phrase to guess";
+            this.PhraseLabel.AutoSize = true;
+            this.PhraseLabel.Location = new System.Drawing.Point(190, 49);
+            this.PhraseLabel.Name = "PhraseLabel";
+            this.PhraseLabel.Size = new System.Drawing.Size(83, 13);
+            this.PhraseLabel.TabIndex = 3;
+            this.PhraseLabel.Text = "Phrase to guess";
             // 
-            // Population
+            // PopulationLabel
             // 
-            this.Population.AutoSize = true;
-            this.Population.Location = new System.Drawing.Point(50, 109);
-            this.Population.Name = "Population";
-            this.Population.Size = new System.Drawing.Size(57, 13);
-            this.Population.TabIndex = 3;
-            this.Population.Text = "Population";
+            this.PopulationLabel.AutoSize = true;
+            this.PopulationLabel.Location = new System.Drawing.Point(50, 109);
+            this.PopulationLabel.Name = "PopulationLabel";
+            this.PopulationLabel.Size = new System.Drawing.Size(57, 13);
+            this.PopulationLabel.TabIndex = 3;
+            this.PopulationLabel.Text = "Population";
             // 
-            // Label3
+            // MutationRateLabel
             // 
-            this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(136, 109);
-            this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(69, 13);
-            this.Label3.TabIndex = 3;
-            this.Label3.Text = "Mutation rate";
+            this.MutationRateLabel.AutoSize = true;
+            this.MutationRateLabel.Location = new System.Drawing.Point(136, 109);
+            this.MutationRateLabel.Name = "MutationRateLabel";
+            this.MutationRateLabel.Size = new System.Drawing.Size(69, 13);
+            this.MutationRateLabel.TabIndex = 3;
+            this.MutationRateLabel.Text = "Mutation rate";
             // 
             // DetailTextBox
             // 
@@ -128,16 +132,18 @@
             this.DetailTextBox.ReadOnly = true;
             this.DetailTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.DetailTextBox.Size = new System.Drawing.Size(374, 148);
-            this.DetailTextBox.TabIndex = 4;
+            this.DetailTextBox.TabIndex = 0;
             this.DetailTextBox.TabStop = false;
             this.DetailTextBox.Text = "";
             // 
             // BestGuessTextBox
             // 
+            this.BestGuessTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.BestGuessTextBox.Location = new System.Drawing.Point(40, 212);
             this.BestGuessTextBox.Name = "BestGuessTextBox";
+            this.BestGuessTextBox.ReadOnly = true;
             this.BestGuessTextBox.Size = new System.Drawing.Size(374, 20);
-            this.BestGuessTextBox.TabIndex = 5;
+            this.BestGuessTextBox.TabIndex = 0;
             this.BestGuessTextBox.TabStop = false;
             // 
             // CurrentGuessLabel
@@ -155,7 +161,7 @@
             this.StopBtn.Location = new System.Drawing.Point(325, 113);
             this.StopBtn.Name = "StopBtn";
             this.StopBtn.Size = new System.Drawing.Size(89, 42);
-            this.StopBtn.TabIndex = 4;
+            this.StopBtn.TabIndex = 7;
             this.StopBtn.Text = "Stop";
             this.StopBtn.UseVisualStyleBackColor = true;
             this.StopBtn.Visible = false;
@@ -188,21 +194,21 @@
             this.TimeLabel.TabIndex = 8;
             this.TimeLabel.Text = "Time: 0";
             // 
-            // ElitePctTextBox
+            // EliteRateTextBox
             // 
-            this.ElitePctTextBox.Location = new System.Drawing.Point(222, 125);
-            this.ElitePctTextBox.Name = "ElitePctTextBox";
-            this.ElitePctTextBox.Size = new System.Drawing.Size(80, 20);
-            this.ElitePctTextBox.TabIndex = 3;
+            this.EliteRateTextBox.Location = new System.Drawing.Point(222, 125);
+            this.EliteRateTextBox.Name = "EliteRateTextBox";
+            this.EliteRateTextBox.Size = new System.Drawing.Size(80, 20);
+            this.EliteRateTextBox.TabIndex = 3;
             // 
-            // ElitePctLabel
+            // EliteRateLabel
             // 
-            this.ElitePctLabel.AutoSize = true;
-            this.ElitePctLabel.Location = new System.Drawing.Point(220, 109);
-            this.ElitePctLabel.Name = "ElitePctLabel";
-            this.ElitePctLabel.Size = new System.Drawing.Size(84, 13);
-            this.ElitePctLabel.TabIndex = 3;
-            this.ElitePctLabel.Text = "Elite percentage";
+            this.EliteRateLabel.AutoSize = true;
+            this.EliteRateLabel.Location = new System.Drawing.Point(236, 109);
+            this.EliteRateLabel.Name = "EliteRateLabel";
+            this.EliteRateLabel.Size = new System.Drawing.Size(48, 13);
+            this.EliteRateLabel.TabIndex = 3;
+            this.EliteRateLabel.Text = "Elite rate";
             // 
             // AllASCIICheckBox
             // 
@@ -211,7 +217,7 @@
             this.AllASCIICheckBox.Location = new System.Drawing.Point(267, 170);
             this.AllASCIICheckBox.Name = "AllASCIICheckBox";
             this.AllASCIICheckBox.Size = new System.Drawing.Size(147, 17);
-            this.AllASCIICheckBox.TabIndex = 9;
+            this.AllASCIICheckBox.TabIndex = 6;
             this.AllASCIICheckBox.Text = "Allow all ASCII characters";
             this.AllASCIICheckBox.UseVisualStyleBackColor = true;
             this.AllASCIICheckBox.CheckedChanged += new System.EventHandler(this.AllASCIICheckBox_CheckedChanged);
@@ -222,7 +228,7 @@
             this.UpperCaseCheckBox.Location = new System.Drawing.Point(123, 170);
             this.UpperCaseCheckBox.Name = "UpperCaseCheckBox";
             this.UpperCaseCheckBox.Size = new System.Drawing.Size(138, 17);
-            this.UpperCaseCheckBox.TabIndex = 9;
+            this.UpperCaseCheckBox.TabIndex = 5;
             this.UpperCaseCheckBox.Text = "Allow upper-case letters";
             this.UpperCaseCheckBox.UseVisualStyleBackColor = true;
             this.UpperCaseCheckBox.CheckedChanged += new System.EventHandler(this.UpperCaseCheckBox_CheckedChanged);
@@ -234,16 +240,45 @@
             this.advancedEvolutionCheckBox.MaximumSize = new System.Drawing.Size(80, 0);
             this.advancedEvolutionCheckBox.Name = "advancedEvolutionCheckBox";
             this.advancedEvolutionCheckBox.Size = new System.Drawing.Size(78, 30);
-            this.advancedEvolutionCheckBox.TabIndex = 10;
+            this.advancedEvolutionCheckBox.TabIndex = 4;
             this.advancedEvolutionCheckBox.Text = "Advanced \r\n Evolution";
             this.advancedEvolutionCheckBox.UseVisualStyleBackColor = true;
             this.advancedEvolutionCheckBox.CheckedChanged += new System.EventHandler(this.advancedEvolutionCheckBox_CheckedChanged);
             // 
-            // Form1
+            // CreatedByLabel2
+            // 
+            this.CreatedByLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.CreatedByLabel2.CausesValidation = false;
+            this.CreatedByLabel2.Font = new System.Drawing.Font("Arial", 7.25F);
+            this.CreatedByLabel2.LinkArea = new System.Windows.Forms.LinkArea(0, 4);
+            this.CreatedByLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
+            this.CreatedByLabel2.Location = new System.Drawing.Point(230, 413);
+            this.CreatedByLabel2.Name = "CreatedByLabel2";
+            this.CreatedByLabel2.Size = new System.Drawing.Size(36, 13);
+            this.CreatedByLabel2.TabIndex = 8;
+            this.CreatedByLabel2.Text = "Tero";
+            this.CreatedByLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.CreatedByLabel2.Click += new System.EventHandler(this.OpenLink_Event);
+            // 
+            // CreatedByLabel1
+            // 
+            this.CreatedByLabel1.AutoSize = true;
+            this.CreatedByLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.CreatedByLabel1.Font = new System.Drawing.Font("Arial", 7.25F);
+            this.CreatedByLabel1.ForeColor = System.Drawing.Color.Black;
+            this.CreatedByLabel1.Location = new System.Drawing.Point(180, 413);
+            this.CreatedByLabel1.Name = "CreatedByLabel1";
+            this.CreatedByLabel1.Size = new System.Drawing.Size(58, 13);
+            this.CreatedByLabel1.TabIndex = 9;
+            this.CreatedByLabel1.Text = "Created by";
+            // 
+            // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 419);
+            this.ClientSize = new System.Drawing.Size(455, 433);
+            this.Controls.Add(this.CreatedByLabel1);
+            this.Controls.Add(this.CreatedByLabel2);
             this.Controls.Add(this.advancedEvolutionCheckBox);
             this.Controls.Add(this.UpperCaseCheckBox);
             this.Controls.Add(this.AllASCIICheckBox);
@@ -253,19 +288,19 @@
             this.Controls.Add(this.StopBtn);
             this.Controls.Add(this.BestGuessTextBox);
             this.Controls.Add(this.DetailTextBox);
-            this.Controls.Add(this.ElitePctLabel);
-            this.Controls.Add(this.Label3);
-            this.Controls.Add(this.Population);
+            this.Controls.Add(this.EliteRateLabel);
+            this.Controls.Add(this.MutationRateLabel);
+            this.Controls.Add(this.PopulationLabel);
             this.Controls.Add(this.CurrentGuessLabel);
-            this.Controls.Add(this.Label1);
-            this.Controls.Add(this.ElitePctTextBox);
+            this.Controls.Add(this.PhraseLabel);
+            this.Controls.Add(this.EliteRateTextBox);
             this.Controls.Add(this.MutationRateTextBox);
             this.Controls.Add(this.PopulationTextBox);
             this.Controls.Add(this.PhraseToGuessTextBox);
             this.Controls.Add(this.StartBtn);
             this.Controls.Add(this.TitleLabel);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Window";
+            this.Text = "Genetic phrase search";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,9 +313,9 @@
         private System.Windows.Forms.TextBox PhraseToGuessTextBox;
         private System.Windows.Forms.TextBox PopulationTextBox;
         private System.Windows.Forms.TextBox MutationRateTextBox;
-        private System.Windows.Forms.Label Label1;
-        private System.Windows.Forms.Label Population;
-        private System.Windows.Forms.Label Label3;
+        private System.Windows.Forms.Label PhraseLabel;
+        private System.Windows.Forms.Label PopulationLabel;
+        private System.Windows.Forms.Label MutationRateLabel;
         private System.Windows.Forms.Label CurrentGuessLabel;
         private System.Windows.Forms.RichTextBox DetailTextBox;
         private System.Windows.Forms.TextBox BestGuessTextBox;
@@ -288,11 +323,13 @@
         private System.Windows.Forms.Label GenerationLabel;
         private System.Windows.Forms.Label FitnessLabel;
         private System.Windows.Forms.Label TimeLabel;
-        private System.Windows.Forms.TextBox ElitePctTextBox;
-        private System.Windows.Forms.Label ElitePctLabel;
+        private System.Windows.Forms.TextBox EliteRateTextBox;
+        private System.Windows.Forms.Label EliteRateLabel;
         private System.Windows.Forms.CheckBox AllASCIICheckBox;
         private System.Windows.Forms.CheckBox UpperCaseCheckBox;
         private System.Windows.Forms.CheckBox advancedEvolutionCheckBox;
+        private System.Windows.Forms.LinkLabel CreatedByLabel2;
+        private Label CreatedByLabel1;
     }
 }
 

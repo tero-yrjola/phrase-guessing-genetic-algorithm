@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using static GeneticAlgorithmTest.EvolutionMethods;
 
 namespace GeneticAlgorithmTest
@@ -59,26 +60,38 @@ namespace GeneticAlgorithmTest
             return chromosome;
         }
 
-        public void SelectionAndCrossOver(decimal elitePct)
+        public void SelectionAndCrossOver(decimal eliteRate)
         {
-            var numberOfElites = (int)(population * elitePct + 0.5m);
+            var numberOfElites = (int)(population * eliteRate + 0.5m);
             var elites = chromosomes.Take(numberOfElites).ToArray();
 
-            bestGuess = elites[0];
+            Chromosome[] crossOverChildren;
 
-            var crossOverChildren = CrossOverElites(elites, population - numberOfElites);
+            try
+            {
+                
+                crossOverChildren = CrossOverElites(elites, population - numberOfElites);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                crossOverChildren = chromosomes;
 
+                bestGuess = chromosomes[0];
+            }
             chromosomes = elites.Concat(crossOverChildren).ToArray();
-        }
 
-        public void Mutation(decimal mutationRate)
-        {
-            chromosomes = MutateDna(mutationRate, chromosomes);
+            bestGuess = chromosomes[0];
         }
+    
 
-        public void AdvancedMutation(decimal mutationRate, int currentGeneration)
-        {
-            chromosomes = MutateDnaAdvanced(mutationRate, currentGeneration, chromosomes);
-        }
+    public void Mutation(decimal mutationRate)
+    {
+        chromosomes = MutateDna(mutationRate, chromosomes);
     }
+
+    public void AdvancedMutation(decimal mutationRate, int currentGeneration)
+    {
+        chromosomes = MutateDnaAdvanced(mutationRate, currentGeneration, chromosomes);
+    }
+}
 }
