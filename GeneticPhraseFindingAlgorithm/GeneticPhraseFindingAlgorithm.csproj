@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B83AF3F4-FABC-42C8-895B-47F6E7569628}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GeneticAlgorithmTest</RootNamespace>
-    <AssemblyName>GeneticAlgorithmTest</AssemblyName>
+    <RootNamespace>GeneticPhraseFindingAlgorithm</RootNamespace>
+    <AssemblyName>GeneticPhraseFindingAlgorithm</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

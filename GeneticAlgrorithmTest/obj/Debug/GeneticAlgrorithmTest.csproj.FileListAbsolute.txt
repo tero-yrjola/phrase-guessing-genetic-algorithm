@@ -1,9 +1,0 @@
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\bin\Debug\GeneticAlgrorithmTest.exe.config
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\bin\Debug\GeneticAlgrorithmTest.exe
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\bin\Debug\GeneticAlgrorithmTest.pdb
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\obj\Debug\GeneticAlgrorithmTest.csprojResolveAssemblyReference.cache
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\obj\Debug\GeneticAlgrorithmTest.Form1.resources
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\obj\Debug\GeneticAlgrorithmTest.Properties.Resources.resources
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\obj\Debug\GeneticAlgrorithmTest.csproj.GenerateResource.Cache
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\obj\Debug\GeneticAlgrorithmTest.exe
-c:\users\tero\documents\visual studio 2017\Projects\GeneticAlgrorithmTest\GeneticAlgrorithmTest\obj\Debug\GeneticAlgrorithmTest.pdb
