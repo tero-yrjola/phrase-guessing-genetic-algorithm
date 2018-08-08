@@ -236,7 +236,7 @@ namespace GeneticAlgorithmTest
         {
             try
             {
-                System.Diagnostics.Process.Start("https://github.com/teroyrjola");
+                System.Diagnostics.Process.Start("https://github.com/tero-yrjola");
             }
             catch (Exception ex) { Output("Whoops, something just broke...\n" + ex.StackTrace); }
         }
